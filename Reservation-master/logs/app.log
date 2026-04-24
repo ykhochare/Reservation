@@ -1,0 +1,415 @@
+2026-04-24T09:50:14.520+05:30  INFO 18024 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 18024 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T09:50:14.551+05:30 DEBUG 18024 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T09:50:14.554+05:30  INFO 18024 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T09:50:14.748+05:30  INFO 18024 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T09:50:14.750+05:30  INFO 18024 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 19 ms.
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T09:50:16.856+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 1 ms.
+2026-04-24T09:50:17.704+05:30  INFO 18024 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T09:50:17.882+05:30  INFO 18024 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 162 ms. Found 4 JPA repository interfaces.
+2026-04-24T09:50:18.690+05:30  WARN 18024 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T09:50:19.534+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T09:50:19.571+05:30  INFO 18024 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T09:50:19.571+05:30  INFO 18024 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T09:50:19.738+05:30  INFO 18024 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T09:50:19.738+05:30  INFO 18024 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4986 ms
+2026-04-24T09:50:20.155+05:30  INFO 18024 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T09:50:20.338+05:30  INFO 18024 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T09:50:20.457+05:30  INFO 18024 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T09:50:21.183+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T09:50:21.269+05:30  INFO 18024 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T09:50:22.029+05:30  INFO 18024 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7c8024da
+2026-04-24T09:50:22.034+05:30  INFO 18024 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T09:50:22.194+05:30  WARN 18024 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T09:50:24.363+05:30  INFO 18024 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T09:50:24.563+05:30  INFO 18024 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T09:50:24.679+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T09:50:24.735+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T09:50:25.534+05:30  INFO 18024 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T09:50:25.554+05:30  INFO 18024 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T09:50:25.624+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T09:50:26.629+05:30  INFO 18024 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T09:50:26.631+05:30  INFO 18024 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T09:50:27.224+05:30  WARN 18024 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T09:50:28.287+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-24T09:50:28.373+05:30  INFO 18024 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-24T09:50:28.415+05:30  INFO 18024 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Started ReservationApplication in 15.115 seconds (process running for 16.665)
+2026-04-24T09:50:55.277+05:30  INFO 18024 --- [Reservation] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T09:50:55.281+05:30  INFO 18024 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T09:50:55.285+05:30  INFO 18024 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-24T09:50:58.375+05:30  INFO 18024 --- [Reservation] [http-nio-8080-exec-10] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 2325 ms
+2026-04-24T09:51:39.017+05:30  INFO 18024 --- [Reservation] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T09:51:39.030+05:30  INFO 18024 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T09:51:39.064+05:30  INFO 18024 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T10:43:52.431+05:30  INFO 16136 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 16136 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T10:43:52.435+05:30 DEBUG 16136 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T10:43:52.437+05:30  INFO 16136 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T10:43:52.613+05:30  INFO 16136 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T10:43:52.613+05:30  INFO 16136 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T10:43:54.493+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 16 ms.
+2026-04-24T10:43:54.500+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T10:43:54.500+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T10:43:54.500+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T10:43:54.500+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T10:43:54.500+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T10:43:54.503+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T10:43:54.503+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 3 ms.
+2026-04-24T10:43:55.405+05:30  INFO 16136 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T10:43:55.661+05:30  INFO 16136 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 236 ms. Found 4 JPA repository interfaces.
+2026-04-24T10:43:56.608+05:30  WARN 16136 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T10:43:57.541+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T10:43:57.573+05:30  INFO 16136 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T10:43:57.573+05:30  INFO 16136 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T10:43:57.780+05:30  INFO 16136 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T10:43:57.782+05:30  INFO 16136 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5167 ms
+2026-04-24T10:43:58.278+05:30  INFO 16136 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T10:43:58.445+05:30  INFO 16136 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T10:43:58.591+05:30  INFO 16136 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T10:43:59.201+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T10:43:59.297+05:30  INFO 16136 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T10:44:00.054+05:30  INFO 16136 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5481530
+2026-04-24T10:44:00.054+05:30  INFO 16136 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T10:44:00.142+05:30  WARN 16136 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T10:44:02.257+05:30  INFO 16136 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T10:44:02.401+05:30  INFO 16136 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T10:44:02.516+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T10:44:02.567+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T10:44:03.439+05:30  INFO 16136 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:03.458+05:30  INFO 16136 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:03.512+05:30  INFO 16136 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T10:44:04.583+05:30  INFO 16136 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:04.588+05:30  INFO 16136 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:05.188+05:30  WARN 16136 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T10:44:05.470+05:30  WARN 16136 --- [Reservation] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invalid mapping on handler class [com.example.Reservation.controllers.PaymentController]: public org.springframework.http.ResponseEntity com.example.Reservation.controllers.PaymentController.getPayments(java.lang.Long)
+2026-04-24T10:44:05.474+05:30  INFO 16136 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T10:44:05.480+05:30  INFO 16136 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T10:44:05.516+05:30  INFO 16136 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T10:44:05.518+05:30  INFO 16136 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-24T10:44:05.555+05:30  INFO 16136 --- [Reservation] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-24T10:44:05.653+05:30 ERROR 16136 --- [Reservation] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Invalid mapping pattern detected:
+/{reservationId
+               ^
+Expected close capture character after variable name }
+
+Action:
+
+Fix this pattern in your application or switch to the legacy parser implementation with 'spring.mvc.pathmatch.matching-strategy=ant_path_matcher'.
+
+2026-04-24T10:44:42.751+05:30  INFO 21712 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 21712 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T10:44:42.757+05:30 DEBUG 21712 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T10:44:42.759+05:30  INFO 21712 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T10:44:42.972+05:30  INFO 21712 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T10:44:42.972+05:30  INFO 21712 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T10:44:44.823+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 21 ms.
+2026-04-24T10:44:44.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T10:44:44.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T10:44:44.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T10:44:44.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T10:44:44.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T10:44:44.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T10:44:44.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 1 ms.
+2026-04-24T10:44:45.655+05:30  INFO 21712 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T10:44:45.933+05:30  INFO 21712 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 260 ms. Found 4 JPA repository interfaces.
+2026-04-24T10:44:46.822+05:30  WARN 21712 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T10:44:47.775+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T10:44:47.805+05:30  INFO 21712 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T10:44:47.807+05:30  INFO 21712 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T10:44:47.988+05:30  INFO 21712 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T10:44:47.988+05:30  INFO 21712 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5013 ms
+2026-04-24T10:44:48.596+05:30  INFO 21712 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T10:44:48.750+05:30  INFO 21712 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T10:44:48.853+05:30  INFO 21712 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T10:44:49.451+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T10:44:49.563+05:30  INFO 21712 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T10:44:50.158+05:30  INFO 21712 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@358716c5
+2026-04-24T10:44:50.163+05:30  INFO 21712 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T10:44:50.267+05:30  WARN 21712 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T10:44:52.498+05:30  INFO 21712 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T10:44:52.646+05:30  INFO 21712 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T10:44:52.795+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T10:44:52.853+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T10:44:53.833+05:30  INFO 21712 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:53.852+05:30  INFO 21712 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:53.913+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T10:44:54.903+05:30  INFO 21712 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:54.906+05:30  INFO 21712 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T10:44:55.533+05:30  WARN 21712 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T10:44:56.733+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-24T10:44:56.825+05:30  INFO 21712 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-24T10:44:56.863+05:30  INFO 21712 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Started ReservationApplication in 15.2 seconds (process running for 16.454)
+2026-04-24T10:45:08.691+05:30  INFO 21712 --- [Reservation] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T10:45:08.693+05:30  INFO 21712 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T10:45:08.697+05:30  INFO 21712 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-04-24T10:45:11.460+05:30  INFO 21712 --- [Reservation] [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 2285 ms
+2026-04-24T10:47:59.662+05:30  INFO 21712 --- [Reservation] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T10:47:59.673+05:30  INFO 21712 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T10:47:59.698+05:30  INFO 21712 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T11:15:57.662+05:30  INFO 17524 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 17524 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T11:15:57.666+05:30 DEBUG 17524 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T11:15:57.666+05:30  INFO 17524 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T11:15:57.725+05:30  INFO 17524 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T11:15:57.725+05:30  INFO 17524 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 6 ms.
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T11:15:58.362+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 0 ms.
+2026-04-24T11:15:58.682+05:30  INFO 17524 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T11:15:58.784+05:30  INFO 17524 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 92 ms. Found 4 JPA repository interfaces.
+2026-04-24T11:15:59.135+05:30  WARN 17524 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T11:15:59.485+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T11:15:59.497+05:30  INFO 17524 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T11:15:59.497+05:30  INFO 17524 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T11:15:59.562+05:30  INFO 17524 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T11:15:59.562+05:30  INFO 17524 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1837 ms
+2026-04-24T11:15:59.736+05:30  INFO 17524 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T11:15:59.807+05:30  INFO 17524 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T11:15:59.832+05:30  INFO 17524 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T11:16:00.102+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T11:16:00.142+05:30  INFO 17524 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T11:16:00.404+05:30  INFO 17524 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5673aa2b
+2026-04-24T11:16:00.407+05:30  INFO 17524 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T11:16:00.464+05:30  WARN 17524 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T11:16:01.457+05:30  INFO 17524 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T11:16:01.524+05:30  INFO 17524 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T11:16:01.564+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T11:16:01.595+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T11:16:01.971+05:30  INFO 17524 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:16:01.979+05:30  INFO 17524 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:16:02.011+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T11:16:02.429+05:30  INFO 17524 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:16:02.431+05:30  INFO 17524 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:16:02.673+05:30  WARN 17524 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T11:16:03.123+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-24T11:16:03.162+05:30  INFO 17524 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-24T11:16:03.178+05:30  INFO 17524 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Started ReservationApplication in 5.92 seconds (process running for 6.394)
+2026-04-24T11:16:44.558+05:30  INFO 17524 --- [Reservation] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T11:16:44.558+05:30  INFO 17524 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T11:16:44.560+05:30  INFO 17524 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-24T11:16:45.762+05:30  INFO 17524 --- [Reservation] [http-nio-8080-exec-5] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 1028 ms
+2026-04-24T11:18:03.492+05:30  WARN 17524 --- [Reservation] [http-nio-8080-exec-8] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 1265, SQLState: 01000
+2026-04-24T11:18:03.492+05:30 ERROR 17524 --- [Reservation] [http-nio-8080-exec-8] o.h.engine.jdbc.spi.SqlExceptionHelper   : Data truncated for column 'status' at row 1
+2026-04-24T11:18:03.522+05:30  WARN 17524 --- [Reservation] [http-nio-8080-exec-8] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.orm.jpa.JpaSystemException: could not execute statement [Data truncated for column 'status' at row 1] [insert into reservations (arrival_date,bungalow_id,created_at,departure_date,guest_email,guest_name,status,total_amount) values (?,?,?,?,?,?,?,?)]]
+2026-04-24T11:20:12.482+05:30  INFO 17524 --- [Reservation] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T11:20:12.488+05:30  INFO 17524 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T11:20:12.497+05:30  INFO 17524 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T11:22:28.876+05:30  INFO 3424 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 3424 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T11:22:28.876+05:30 DEBUG 3424 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T11:22:28.876+05:30  INFO 3424 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T11:22:28.932+05:30  INFO 3424 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T11:22:28.932+05:30  INFO 3424 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 5 ms.
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T11:22:29.602+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 0 ms.
+2026-04-24T11:22:29.953+05:30  INFO 3424 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T11:22:30.043+05:30  INFO 3424 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 84 ms. Found 4 JPA repository interfaces.
+2026-04-24T11:22:30.375+05:30  WARN 3424 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T11:22:30.722+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T11:22:30.732+05:30  INFO 3424 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T11:22:30.732+05:30  INFO 3424 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T11:22:30.806+05:30  INFO 3424 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T11:22:30.806+05:30  INFO 3424 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1874 ms
+2026-04-24T11:22:30.966+05:30  INFO 3424 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T11:22:31.032+05:30  INFO 3424 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T11:22:31.066+05:30  INFO 3424 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T11:22:31.325+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T11:22:31.362+05:30  INFO 3424 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T11:22:31.612+05:30  INFO 3424 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@358716c5
+2026-04-24T11:22:31.612+05:30  INFO 3424 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T11:22:31.662+05:30  WARN 3424 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T11:22:32.622+05:30  INFO 3424 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T11:22:32.692+05:30  INFO 3424 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T11:22:32.747+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T11:22:32.779+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T11:22:33.142+05:30  INFO 3424 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:22:33.152+05:30  INFO 3424 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:22:33.174+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T11:22:33.540+05:30  INFO 3424 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:22:33.542+05:30  INFO 3424 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:22:33.792+05:30  WARN 3424 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T11:22:34.224+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-24T11:22:34.256+05:30  INFO 3424 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-24T11:22:34.269+05:30  INFO 3424 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Started ReservationApplication in 5.813 seconds (process running for 6.332)
+2026-04-24T11:22:38.734+05:30  INFO 3424 --- [Reservation] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T11:22:38.734+05:30  INFO 3424 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T11:22:38.734+05:30  INFO 3424 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-04-24T11:22:39.642+05:30  INFO 3424 --- [Reservation] [http-nio-8080-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 728 ms
+2026-04-24T11:25:37.612+05:30  WARN 3424 --- [Reservation] [http-nio-8080-exec-9] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 1265, SQLState: 01000
+2026-04-24T11:25:37.617+05:30 ERROR 3424 --- [Reservation] [http-nio-8080-exec-9] o.h.engine.jdbc.spi.SqlExceptionHelper   : Data truncated for column 'status' at row 1
+2026-04-24T11:25:37.631+05:30  WARN 3424 --- [Reservation] [http-nio-8080-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.orm.jpa.JpaSystemException: could not execute statement [Data truncated for column 'status' at row 1] [insert into reservations (arrival_date,bungalow_id,created_at,departure_date,guest_email,guest_name,status,total_amount) values (?,?,?,?,?,?,?,?)]]
+2026-04-24T11:29:15.572+05:30  INFO 3424 --- [Reservation] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T11:29:15.582+05:30  INFO 3424 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T11:29:15.592+05:30  INFO 3424 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T11:54:57.271+05:30  INFO 20772 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 20772 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T11:54:57.278+05:30 DEBUG 20772 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T11:54:57.283+05:30  INFO 20772 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T11:54:57.456+05:30  INFO 20772 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T11:54:57.456+05:30  INFO 20772 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T11:54:59.282+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 16 ms.
+2026-04-24T11:54:59.282+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T11:54:59.290+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T11:54:59.290+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T11:54:59.290+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T11:54:59.291+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T11:54:59.291+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T11:54:59.291+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 2 ms.
+2026-04-24T11:55:00.170+05:30  INFO 20772 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T11:55:00.421+05:30  INFO 20772 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 231 ms. Found 4 JPA repository interfaces.
+2026-04-24T11:55:01.306+05:30  WARN 20772 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T11:55:02.351+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T11:55:02.382+05:30  INFO 20772 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T11:55:02.382+05:30  INFO 20772 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T11:55:02.566+05:30  INFO 20772 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T11:55:02.566+05:30  INFO 20772 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5108 ms
+2026-04-24T11:55:03.040+05:30  INFO 20772 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T11:55:03.237+05:30  INFO 20772 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T11:55:03.331+05:30  INFO 20772 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T11:55:04.021+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T11:55:04.096+05:30  INFO 20772 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T11:55:04.755+05:30  INFO 20772 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3ebe5e4c
+2026-04-24T11:55:04.760+05:30  INFO 20772 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T11:55:04.948+05:30  WARN 20772 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T11:55:07.236+05:30  INFO 20772 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T11:55:08.480+05:30  INFO 20772 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T11:55:08.638+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T11:55:08.724+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T11:55:09.650+05:30  INFO 20772 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:55:09.668+05:30  INFO 20772 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:55:09.718+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T11:55:11.024+05:30  INFO 20772 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:55:11.024+05:30  INFO 20772 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T11:55:11.630+05:30  WARN 20772 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T11:55:12.746+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-24T11:55:12.835+05:30  INFO 20772 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-24T11:55:12.876+05:30  INFO 20772 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Started ReservationApplication in 16.974 seconds (process running for 18.325)
+2026-04-24T11:55:20.893+05:30  INFO 20772 --- [Reservation] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T11:55:20.893+05:30  INFO 20772 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T11:55:20.903+05:30  INFO 20772 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
+2026-04-24T11:55:23.223+05:30  INFO 20772 --- [Reservation] [http-nio-8080-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 1787 ms
+2026-04-24T11:57:45.833+05:30  INFO 20772 --- [Reservation] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T11:57:45.851+05:30  INFO 20772 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T11:57:45.882+05:30  INFO 20772 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T12:55:35.621+05:30  INFO 13504 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 13504 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T12:55:35.623+05:30 DEBUG 13504 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T12:55:35.624+05:30  INFO 13504 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T12:55:35.681+05:30  INFO 13504 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T12:55:35.681+05:30  INFO 13504 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 5 ms.
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T12:55:36.253+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 0 ms.
+2026-04-24T12:55:36.561+05:30  INFO 13504 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T12:55:36.633+05:30  INFO 13504 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 67 ms. Found 4 JPA repository interfaces.
+2026-04-24T12:55:36.958+05:30  WARN 13504 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T12:55:37.263+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T12:55:37.273+05:30  INFO 13504 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T12:55:37.273+05:30  INFO 13504 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T12:55:37.329+05:30  INFO 13504 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T12:55:37.330+05:30  INFO 13504 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1648 ms
+2026-04-24T12:55:37.505+05:30  INFO 13504 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T12:55:37.564+05:30  INFO 13504 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T12:55:37.602+05:30  INFO 13504 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T12:55:37.833+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T12:55:37.853+05:30  INFO 13504 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T12:55:38.130+05:30  INFO 13504 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c8d4e1b
+2026-04-24T12:55:38.133+05:30  INFO 13504 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T12:55:38.196+05:30  WARN 13504 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T12:55:39.096+05:30  INFO 13504 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T12:55:39.163+05:30  INFO 13504 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T12:55:39.208+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T12:55:39.233+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T12:55:39.563+05:30  INFO 13504 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T12:55:39.579+05:30  INFO 13504 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T12:55:39.596+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T12:55:39.958+05:30  INFO 13504 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T12:55:39.958+05:30  INFO 13504 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T12:55:40.166+05:30  WARN 13504 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T12:55:40.591+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-24T12:55:40.623+05:30  INFO 13504 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-24T12:55:40.636+05:30  INFO 13504 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Started ReservationApplication in 5.415 seconds (process running for 5.916)
+2026-04-24T12:55:46.127+05:30  INFO 13504 --- [Reservation] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T12:55:46.127+05:30  INFO 13504 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T12:55:46.127+05:30  INFO 13504 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-04-24T12:55:46.975+05:30  INFO 13504 --- [Reservation] [http-nio-8080-exec-10] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 554 ms
+2026-04-24T12:56:19.192+05:30  WARN 13504 --- [Reservation] [http-nio-8080-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.NullPointerException: Cannot invoke "com.example.Reservation.entities.CancellationPolicy.getRefundPercentage()" because "policy" is null]
+2026-04-24T12:57:44.223+05:30  WARN 13504 --- [Reservation] [http-nio-8080-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.ClassCastException: class java.lang.Long cannot be cast to class java.lang.Boolean (java.lang.Long and java.lang.Boolean are in module java.base of loader 'bootstrap')]
+2026-04-24T12:58:52.879+05:30  INFO 13504 --- [Reservation] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T12:58:52.884+05:30  INFO 13504 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T12:58:52.884+05:30  INFO 13504 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-24T13:03:14.826+05:30  INFO 1904 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Starting ReservationApplication using Java 17.0.18 with PID 1904 (C:\Users\y.khochare\Downloads\Reservation\Reservation\target\classes started by y.khochare in C:\Users\y.khochare\Downloads\Reservation)
+2026-04-24T13:03:14.826+05:30 DEBUG 1904 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-04-24T13:03:14.826+05:30  INFO 1904 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-04-24T13:03:14.883+05:30  INFO 1904 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24T13:03:14.883+05:30  INFO 1904 --- [Reservation] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24T13:03:15.498+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 8 ms.
+2026-04-24T13:03:15.498+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRepository already defined in the application context, skipping the registration of a jobRepository
+2026-04-24T13:03:15.498+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobExplorer already defined in the application context, skipping the registration of a jobExplorer
+2026-04-24T13:03:15.499+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobLauncher already defined in the application context, skipping the registration of a jobLauncher
+2026-04-24T13:03:15.499+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistry already defined in the application context, skipping the registration of a jobRegistry
+2026-04-24T13:03:15.499+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobRegistryBeanPostProcessor already defined in the application context, skipping the registration of a jobRegistryBeanPostProcessor
+2026-04-24T13:03:15.499+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Bean jobOperator already defined in the application context, skipping the registration of a jobOperator
+2026-04-24T13:03:15.499+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.c.annotation.BatchRegistrar      : Finished Spring Batch infrastructure beans configuration in 0 ms.
+2026-04-24T13:03:15.783+05:30  INFO 1904 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-24T13:03:15.853+05:30  INFO 1904 --- [Reservation] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 4 JPA repository interfaces.
+2026-04-24T13:03:16.163+05:30  WARN 1904 --- [Reservation] [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'jobRegistry' of type [org.springframework.batch.core.configuration.support.MapJobRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [jobRegistryBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-04-24T13:03:16.490+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-24T13:03:16.513+05:30  INFO 1904 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-24T13:03:16.513+05:30  INFO 1904 --- [Reservation] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-04-24T13:03:16.589+05:30  INFO 1904 --- [Reservation] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-24T13:03:16.589+05:30  INFO 1904 --- [Reservation] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1700 ms
+2026-04-24T13:03:16.783+05:30  INFO 1904 --- [Reservation] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-24T13:03:16.863+05:30  INFO 1904 --- [Reservation] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-24T13:03:16.910+05:30  INFO 1904 --- [Reservation] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-24T13:03:17.158+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-24T13:03:17.183+05:30  INFO 1904 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-24T13:03:17.433+05:30  INFO 1904 --- [Reservation] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@22e3b770
+2026-04-24T13:03:17.441+05:30  INFO 1904 --- [Reservation] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-24T13:03:17.493+05:30  WARN 1904 --- [Reservation] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-24T13:03:18.324+05:30  INFO 1904 --- [Reservation] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-24T13:03:18.390+05:30  INFO 1904 --- [Reservation] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T13:03:18.425+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: MYSQL
+2026-04-24T13:03:18.446+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2026-04-24T13:03:18.775+05:30  INFO 1904 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T13:03:18.783+05:30  INFO 1904 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T13:03:18.803+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-24T13:03:19.126+05:30  INFO 1904 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T13:03:19.127+05:30  INFO 1904 --- [Reservation] [restartedMain] .c.a.BatchObservabilityBeanPostProcessor : No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+2026-04-24T13:03:19.346+05:30  WARN 1904 --- [Reservation] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-24T13:03:19.725+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-24T13:03:19.763+05:30  INFO 1904 --- [Reservation] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-24T13:03:19.774+05:30  INFO 1904 --- [Reservation] [restartedMain] c.e.Reservation.ReservationApplication   : Started ReservationApplication in 5.349 seconds (process running for 5.774)
+2026-04-24T13:03:33.358+05:30  INFO 1904 --- [Reservation] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24T13:03:33.358+05:30  INFO 1904 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-24T13:03:33.360+05:30  INFO 1904 --- [Reservation] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-24T13:03:34.123+05:30  INFO 1904 --- [Reservation] [http-nio-8080-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 537 ms
+2026-04-24T13:05:57.547+05:30  INFO 1904 --- [Reservation] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-24T13:05:57.551+05:30  INFO 1904 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-24T13:05:57.562+05:30  INFO 1904 --- [Reservation] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
