@@ -51,6 +51,10 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation",cascade = CascadeType.ALL)
     private List<Payment> payments;
 
+    @ManyToOne
+    @JoinColumn(name = "guest_id")
+    private Guest guest;
+
     @PrePersist
     public void createdAt(){
         this.createdAt=LocalDateTime.now();
