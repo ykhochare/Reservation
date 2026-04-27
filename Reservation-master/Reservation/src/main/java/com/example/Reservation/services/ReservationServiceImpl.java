@@ -2,13 +2,16 @@ package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
+import com.example.Reservation.dtos.RevenueResponseDto;
 import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.ReservationMapper;
+import com.example.Reservation.repositories.CancellationRepository;
 import com.example.Reservation.repositories.GuestRepository;
+import com.example.Reservation.repositories.PaymentRepository;
 import com.example.Reservation.repositories.ReservationRepository;
 import com.example.Reservation.specifications.ReservationSpecification;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,10 +30,16 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final GuestRepository guestRepository;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, EmailService emailService, GuestRepository guestRepository) {
+    private final PaymentRepository paymentRepository;
+
+    private final CancellationRepository cancellationRepository;
+
+    public ReservationServiceImpl(ReservationRepository reservationRepository, EmailService emailService, GuestRepository guestRepository, PaymentRepository paymentRepository, CancellationRepository cancellationRepository) {
         this.reservationRepository = reservationRepository;
         this.emailService = emailService;
         this.guestRepository = guestRepository;
+        this.paymentRepository = paymentRepository;
+        this.cancellationRepository = cancellationRepository;
     }
 
     @Override
@@ -101,6 +110,16 @@ public class ReservationServiceImpl implements ReservationService{
         Reservation reservation=reservationRepository.findById(id).orElseThrow(()->new ReservationNotFoundException("Reservation Not found.."));
 
         return ReservationMapper.toResponseDto(reservation);
+    }
+
+    @Override
+    public RevenueResponseDto getRevenueByBungalow(Long bungalowId) {
+        double totalRevenue=paymentRepository.calculateRevenueByBungalow(bungalowId);
+
+        double totalRefunds= cancellationRepository.calculateRefundByBungalow(bungalowId);
+
+        double netRevenue=totalRevenue-totalRefunds;
+        return new RevenueResponseDto(bungalowId,totalRevenue,totalRefunds,netRevenue);
     }
 
     private boolean isValidReservation(LocalDate arrival,LocalDate departure){

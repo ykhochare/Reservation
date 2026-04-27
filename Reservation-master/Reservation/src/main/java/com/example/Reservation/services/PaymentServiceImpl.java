@@ -2,11 +2,13 @@ package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.PaymentResponse;
 import com.example.Reservation.dtos.PaymentSuccessResponse;
+import com.example.Reservation.dtos.RevenueResponseDto;
 import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.Payment;
 import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.PaymentMapper;
+import com.example.Reservation.repositories.CancellationRepository;
 import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.PaymentRepository;
 import com.example.Reservation.repositories.ReservationRepository;
@@ -25,10 +27,13 @@ public class PaymentServiceImpl implements PaymentService{
 
     private final GuestRepository guestRepository;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository, GuestRepository guestRepository) {
+    private final CancellationRepository cancellationRepository;
+
+    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, CancellationRepository cancellationRepository) {
         this.paymentRepository = paymentRepository;
         this.reservationRepository = reservationRepository;
         this.guestRepository = guestRepository;
+        this.cancellationRepository = cancellationRepository;
     }
 
     @Override
@@ -70,4 +75,5 @@ public class PaymentServiceImpl implements PaymentService{
 
         return payments.stream().map(PaymentMapper::toResponseDto).toList();
     }
+
 }

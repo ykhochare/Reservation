@@ -2,6 +2,7 @@ package com.example.Reservation.controllers;
 
 import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
+import com.example.Reservation.dtos.RevenueResponseDto;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.services.ReservationService;
 import org.springframework.http.HttpStatus;
@@ -50,4 +51,10 @@ public class ReservationController {
         return reservationService.getAllReservations(status, arrivalDate, departureDate, bungalowId);
     }
 
+    @GetMapping("/bungalow/{bungalowId}/revenue")
+    public ResponseEntity<RevenueResponseDto> getBungalowRevenue(@PathVariable Long bungalowId){
+        RevenueResponseDto revenueResponse=reservationService.getRevenueByBungalow(bungalowId);
+
+        return ResponseEntity.ok(revenueResponse);
+    }
 }
