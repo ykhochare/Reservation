@@ -24,7 +24,7 @@ public class PaymentController {
         return ResponseEntity.ok("Payment successful of amount: "+amount);
     }
 
-    @GetMapping("{reservationId}")
+    @GetMapping("/{reservationId}")
     public ResponseEntity<List<PaymentResponse>> getPayments(@PathVariable Long reservationId){
         List<PaymentResponse> payments=paymentService.getAllPayments(reservationId);
 
