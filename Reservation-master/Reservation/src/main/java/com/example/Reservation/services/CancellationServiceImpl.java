@@ -58,7 +58,7 @@ public class CancellationServiceImpl implements CancellationService{
         }
 
         if(reservation.getStatus()!=ReservationStatus.CONFIRMED){
-            throw new RuntimeException("Your reservation is not confirmed.");
+            throw new RuntimeException("Only confirmed reservations can be cancel");
         }
 
         int days= (int)ChronoUnit.DAYS.between(LocalDate.now(),reservation.getArrivalDate());
@@ -75,16 +75,18 @@ public class CancellationServiceImpl implements CancellationService{
         cancellation.setRefundStatus(RefundStatus.PENDING);
         cancellation.setDaysBeforeCheckIn(days);
 
+        reservation.setStatus(ReservationStatus.CANCELLED);
+        reservationRepository.save(reservation);
         cancellationRepository.save(cancellation);
 
-        reservation.setStatus(ReservationStatus.CANCELLED);
+
 
         Guest guest=reservation.getGuest();
         int newPoints=Math.max(calculateCancellationLoyaltyPoints(reservation),0);
         guest.setLoyaltyPoints(newPoints);
 
         guestRepository.save(guest);
-        reservationRepository.save(reservation);
+
 
 
 
