@@ -13,6 +13,7 @@ public class ReservationResponse {
     private Long bungalowId;
     private String guestName;
     private String guestEmail;
+    private String phone;
     private LocalDate arrivalDate;
     private LocalDate departureDate;
     private Double totalAmount;

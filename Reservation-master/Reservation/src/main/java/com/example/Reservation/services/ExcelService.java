@@ -1,8 +1,10 @@
 package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.ReservationResponse;
+import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.ReservationRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,8 +24,11 @@ public class ExcelService {
 
     private final ReservationRepository reservationRepository;
 
-    public ExcelService(ReservationRepository reservationRepository) {
+    private final GuestRepository guestRepository;
+
+    public ExcelService(ReservationRepository reservationRepository, GuestRepository guestRepository) {
         this.reservationRepository = reservationRepository;
+        this.guestRepository = guestRepository;
     }
 
     public ByteArrayInputStream generateExcel(List<ReservationResponse> reservations) {
@@ -86,26 +91,32 @@ public class ExcelService {
 
                 Reservation reservation = new Reservation();
 
-//                // Name
-//                reservation.setGuestName(getStringValue(row.getCell(0)));
-//
-//                // Email
-//                reservation.setGuestEmail(getStringValue(row.getCell(1)));
+                Guest guest=guestRepository.findByGuestEmail(getStringValue(row.getCell(1))).orElseGet(()->{
+                    Guest newGuest=new Guest();
+                    newGuest.setGuestName(getStringValue(row.getCell(0)));
+                    newGuest.setGuestEmail(getStringValue(row.getCell(1)));
+                    newGuest.setPhone(getStringValue(row.getCell(2)));
+                    newGuest.setLoyaltyPoints(50);
+                    return guestRepository.save(newGuest);
+                });
 
                 // BungalowId
-                reservation.setBungalowId(getLongValue(row.getCell(2)));
+                reservation.setBungalowId(getLongValue(row.getCell(3)));
 
                 // ArrivalDate
-                reservation.setArrivalDate(getLocalDate(row.getCell(3)));
+                reservation.setArrivalDate(getLocalDate(row.getCell(4)));
 
                 // DepartureDate
-                reservation.setDepartureDate(getLocalDate(row.getCell(4)));
+                reservation.setDepartureDate(getLocalDate(row.getCell(5)));
 
                 // TotalAmount
-                reservation.setTotalAmount(getDoubleValue(row.getCell(5)));
+                reservation.setTotalAmount(getDoubleValue(row.getCell(6)));
 
                 // Enum
-                reservation.setStatus(getStatus(row.getCell(6)));
+                reservation.setStatus(getStatus(row.getCell(7)));
+
+                //Guest
+                reservation.setGuest(guest);
 
                 reservations.add(reservation);
             }

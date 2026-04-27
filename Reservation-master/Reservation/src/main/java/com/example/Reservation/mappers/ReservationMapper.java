@@ -22,6 +22,7 @@ public class ReservationMapper {
         response.setId(reservation.getId());
         response.setBungalowId(reservation.getBungalowId());
         response.setGuestName((reservation.getGuest().getGuestName()));
+        response.setPhone(reservation.getGuest().getPhone());
         response.setArrivalDate(reservation.getArrivalDate());
         response.setDepartureDate(reservation.getDepartureDate());
         response.setTotalAmount(reservation.getTotalAmount());
