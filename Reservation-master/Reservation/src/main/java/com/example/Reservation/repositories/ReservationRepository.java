@@ -30,6 +30,6 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long>, 
 
     Page<Reservation> findByStatus(ReservationStatus status, Pageable pageable);
 
-    @Query(value = "select * from reservations where bungalow_id=:bungalowId and status =:status order by created_at asc limit 1", nativeQuery = true)
+    @Query(value = "select * from reservations where bungalow_id=:bungalowId and status =:status order by total_amount desc,created_at asc limit 1", nativeQuery = true)
     Optional<Reservation> findTopWaitingReservation(@Param("bungalowId") Long bungalowId, @Param("status") String status);
 }
