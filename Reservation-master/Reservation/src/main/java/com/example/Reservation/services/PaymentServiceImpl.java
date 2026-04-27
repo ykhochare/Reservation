@@ -1,10 +1,13 @@
 package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.PaymentResponse;
+import com.example.Reservation.dtos.PaymentSuccessResponse;
+import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.Payment;
 import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.PaymentMapper;
+import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.PaymentRepository;
 import com.example.Reservation.repositories.ReservationRepository;
 import jakarta.transaction.Transactional;
@@ -20,14 +23,17 @@ public class PaymentServiceImpl implements PaymentService{
 
     private final ReservationRepository reservationRepository;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository) {
+    private final GuestRepository guestRepository;
+
+    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository, GuestRepository guestRepository) {
         this.paymentRepository = paymentRepository;
         this.reservationRepository = reservationRepository;
+        this.guestRepository = guestRepository;
     }
 
     @Override
     @Transactional
-    public void pay(Long reservationId,Double amount) {
+    public PaymentSuccessResponse pay(Long reservationId, Double amount,Integer pointsUseTo) {
 
         Reservation reservation=reservationRepository.findById(reservationId).orElseThrow(()->new ReservationNotFoundException("Reservation not found..."));
 
@@ -35,7 +41,9 @@ public class PaymentServiceImpl implements PaymentService{
 
         double paidAmount=payments.stream().mapToDouble(Payment::getAmount).sum();
 
-        if(paidAmount+amount>reservation.getTotalAmount())
+        double totalPaidAmount=paidAmount+amount;
+
+        if(totalPaidAmount>reservation.getTotalAmount())
             throw new RuntimeException("Payment exceeds");
 
         Payment payment=new Payment();
@@ -46,6 +54,12 @@ public class PaymentServiceImpl implements PaymentService{
 
         paymentRepository.save(payment);
 
+        Guest guest= reservation.getGuest();
+        int updatedLoyaltyPoints=guest.getLoyaltyPoints()-pointsUseTo;
+        guest.setLoyaltyPoints(updatedLoyaltyPoints);
+        guestRepository.save(guest);
+
+        return new PaymentSuccessResponse(totalPaidAmount,updatedLoyaltyPoints);
 
     }
 

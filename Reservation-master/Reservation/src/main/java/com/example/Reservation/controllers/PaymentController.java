@@ -1,6 +1,7 @@
 package com.example.Reservation.controllers;
 
 import com.example.Reservation.dtos.PaymentResponse;
+import com.example.Reservation.dtos.PaymentSuccessResponse;
 import com.example.Reservation.services.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,11 @@ public class PaymentController {
     }
 
     @PostMapping("/pay/{reservationId}")
-    public ResponseEntity<String> payAmount(@PathVariable Long reservationId, @RequestParam Double amount){
-        paymentService.pay(reservationId, amount);
+    public ResponseEntity<PaymentSuccessResponse> payAmount(@PathVariable Long reservationId, @RequestParam Double amount,@RequestParam(defaultValue = "0") Integer pointsToUse){
 
-        return ResponseEntity.ok("Payment successful of amount: "+amount);
+        PaymentSuccessResponse paymentResponse=paymentService.pay(reservationId, amount,pointsToUse);
+
+        return ResponseEntity.ok(paymentResponse);
     }
 
     @GetMapping("/{reservationId}")
