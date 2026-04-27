@@ -24,4 +24,10 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.internalServerError().body(ex.getMessage());
     }
+
+    @ExceptionHandler(GuestNotFoundException.class)
+    public ResponseEntity<?> guestNotFound(GuestNotFoundException ex){
+
+        return ResponseEntity.badRequest().body(ex.getMessage()+"Kindly register first.");
+    }
 }

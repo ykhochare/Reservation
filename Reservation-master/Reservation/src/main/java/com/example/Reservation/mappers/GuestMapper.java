@@ -22,6 +22,7 @@ public class GuestMapper {
 
         GuestResponse response=new GuestResponse();
 
+        response.setGuestId(guest.getGuestId());
         response.setGuestName(guest.getGuestName());
         response.setGuestEmail(guest.getGuestEmail());
         response.setPhone(guest.getPhone());

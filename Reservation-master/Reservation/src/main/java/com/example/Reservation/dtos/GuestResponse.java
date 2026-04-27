@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class GuestResponse {
 
+    private Long guestId;
+
     private String guestName;
 
     private String guestEmail;

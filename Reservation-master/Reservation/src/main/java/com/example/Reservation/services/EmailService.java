@@ -14,7 +14,7 @@ public class EmailService {
 
     public void sendMail(Reservation reservation){
 
-        String body = "Hello " + reservation.getGuestName() + ",\n\n"
+        String body = "Hello " + reservation.getGuest().getGuestName() + ",\n\n"
                 + "Your reservation is successfully confirmed.\n\n"
                 + "Reservation Details:\n"
                 + "Reservation ID: " + reservation.getId() + "\n"
@@ -23,7 +23,7 @@ public class EmailService {
                 + "Thank you for choosing our service!";
 
         SimpleMailMessage message=new SimpleMailMessage();
-        message.setTo(reservation.getGuestEmail());
+        message.setTo(reservation.getGuest().getGuestEmail());
         message.setSubject("Confirm Reservation");
         message.setText(body);
         message.setFrom("yashkhochare279@gmail.com");

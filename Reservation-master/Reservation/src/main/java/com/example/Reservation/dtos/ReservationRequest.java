@@ -9,11 +9,9 @@ import java.time.LocalDate;
 @Setter
 public class ReservationRequest {
 
+    private Long guestId;
+
     private Long bungalowId;
-
-    private String guestName;
-
-    private String guestEmail;
 
     private LocalDate arrivalDate;
 

@@ -9,8 +9,6 @@ public class ReservationMapper {
     public static Reservation toEntity(ReservationRequest request){
         Reservation reservation=new Reservation();
         reservation.setBungalowId(request.getBungalowId());
-        reservation.setGuestName(request.getGuestName());
-        reservation.setGuestEmail(request.getGuestEmail());
         reservation.setArrivalDate(request.getArrivalDate());
         reservation.setDepartureDate(request.getDepartureDate());
         reservation.setTotalAmount(request.getTotalAmount());
@@ -23,12 +21,12 @@ public class ReservationMapper {
 
         response.setId(reservation.getId());
         response.setBungalowId(reservation.getBungalowId());
-        response.setGuestName((reservation.getGuestName()));
+        response.setGuestName((reservation.getGuest().getGuestName()));
         response.setArrivalDate(reservation.getArrivalDate());
         response.setDepartureDate(reservation.getDepartureDate());
         response.setTotalAmount(reservation.getTotalAmount());
         response.setStatus(reservation.getStatus());
-        response.setGuestEmail(reservation.getGuestEmail());
+        response.setGuestEmail(reservation.getGuest().getGuestEmail());
         return response;
     }
 }

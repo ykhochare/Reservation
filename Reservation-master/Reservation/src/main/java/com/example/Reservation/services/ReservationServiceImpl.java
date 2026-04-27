@@ -2,16 +2,20 @@ package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
+import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.ReservationMapper;
+import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.ReservationRepository;
 import com.example.Reservation.specifications.ReservationSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -21,18 +25,24 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final EmailService emailService;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, EmailService emailService) {
+    private final GuestRepository guestRepository;
+
+    public ReservationServiceImpl(ReservationRepository reservationRepository, EmailService emailService, GuestRepository guestRepository) {
         this.reservationRepository = reservationRepository;
         this.emailService = emailService;
+        this.guestRepository = guestRepository;
     }
 
     @Override
     public ReservationResponse addReservation(ReservationRequest request) {
 
+        Guest guest=guestRepository.findById(request.getGuestId()).orElseThrow(()->new GuestNotFoundException("Guest Not Found..."));
+
         if(!isValidReservation(request.getArrivalDate(),request.getDepartureDate()))
             throw new RuntimeException("Select appropriate dates of booking.");
 
         Reservation reservation= ReservationMapper.toEntity(request);
+        reservation.setGuest(guest);
 
         if(reservationRepository.existsOverlap(request.getBungalowId(),ReservationStatus.CONFIRMED,request.getArrivalDate(),request.getDepartureDate())){
             reservation.setStatus(ReservationStatus.WAITING);
@@ -50,6 +60,12 @@ public class ReservationServiceImpl implements ReservationService{
         Reservation reservation=reservationRepository.findById(id).orElseThrow(()->new ReservationNotFoundException("Reservation not found..."));
 
         reservation.setStatus(ReservationStatus.CONFIRMED);
+
+        Guest guest= reservation.getGuest();
+        int newPoints=calculateLoyaltyPoints(reservation);
+        guest.setLoyaltyPoints(newPoints);
+        guestRepository.save(guest);
+
         reservationRepository.save(reservation);
 
         emailService.sendMail(reservation);
@@ -89,5 +105,13 @@ public class ReservationServiceImpl implements ReservationService{
 
     private boolean isValidReservation(LocalDate arrival,LocalDate departure){
         return arrival.isBefore(departure) || !arrival.isBefore(LocalDate.now());
+    }
+
+    private int calculateLoyaltyPoints(Reservation reservation){
+
+        int days= (int)ChronoUnit.DAYS.between(reservation.getArrivalDate(),reservation.getDepartureDate());
+
+        return reservation.getGuest().getLoyaltyPoints()+days*10;
+
     }
 }

@@ -22,12 +22,6 @@ public class Reservation {
     @Column(name = "bungalow_id", nullable = false)
     private Long bungalowId;
 
-    @Column(name = "guest_name", nullable = false)
-    private String guestName;
-
-    @Column(name = "guest_email", nullable = false)
-    private String guestEmail;
-
     @Column(name = "arrival_date", nullable = false)
     private LocalDate arrivalDate;
 
@@ -51,6 +45,7 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation",cascade = CascadeType.ALL)
     private List<Payment> payments;
 
+    // Many-to-One with Guest
     @ManyToOne
     @JoinColumn(name = "guest_id")
     private Guest guest;

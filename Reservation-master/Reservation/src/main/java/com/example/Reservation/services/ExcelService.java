@@ -86,11 +86,11 @@ public class ExcelService {
 
                 Reservation reservation = new Reservation();
 
-                // Name
-                reservation.setGuestName(getStringValue(row.getCell(0)));
-
-                // Email
-                reservation.setGuestEmail(getStringValue(row.getCell(1)));
+//                // Name
+//                reservation.setGuestName(getStringValue(row.getCell(0)));
+//
+//                // Email
+//                reservation.setGuestEmail(getStringValue(row.getCell(1)));
 
                 // BungalowId
                 reservation.setBungalowId(getLongValue(row.getCell(2)));
