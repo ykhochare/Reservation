@@ -34,4 +34,23 @@ public class GuestServiceImpl implements GuestService{
 
         return GuestMapper.toResponseDto(guest);
     }
+
+    @Override
+    public GuestResponse editGuest(Long guestId, GuestRequest request) {
+        Guest guest=guestRepository.findById(guestId).orElseThrow(()->new GuestNotFoundException("Guest not found..."));
+        guest.setGuestName(request.getGuestName());
+        guest.setGuestEmail(request.getGuestEmail());
+        guest.setPhone(request.getPhone());
+
+        Guest savedGuest=guestRepository.save(guest);
+
+        return GuestMapper.toResponseDto(savedGuest);
+    }
+
+    @Override
+    public GuestResponse getByEmail(String email) {
+        Guest guest=guestRepository.findByGuestEmail(email).orElseThrow(()->new GuestNotFoundException("Invalid Email"));
+
+        return GuestMapper.toResponseDto(guest);
+    }
 }

@@ -31,4 +31,19 @@ public class GuestController {
         return ResponseEntity.ok(guestResponse);
     }
 
+    @PutMapping("/{guestId}")
+    public ResponseEntity<GuestResponse> updateGuest(@PathVariable Long guestId,@RequestBody GuestRequest guestRequest){
+        GuestResponse guestResponse=guestService.editGuest(guestId,guestRequest);
+
+        return ResponseEntity.ok(guestResponse);
+    }
+
+
+    @GetMapping("/email")
+    public ResponseEntity<GuestResponse> getGuestByEmail(@RequestParam String email){
+        GuestResponse guestResponse=guestService.getByEmail(email);
+
+        return ResponseEntity.ok(guestResponse);
+    }
+
 }
