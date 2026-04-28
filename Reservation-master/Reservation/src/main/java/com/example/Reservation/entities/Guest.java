@@ -30,6 +30,9 @@ public class Guest {
     @OneToMany(mappedBy = "guest")
     private List<Reservation> reservations;
 
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
+    private List<LoyaltyPointsHistory> loyaltyPointsHistory;
+
     @PrePersist
     public void registeredAt(){this.registeredAt=LocalDateTime.now();}
 

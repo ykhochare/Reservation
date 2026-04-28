@@ -2,16 +2,14 @@ package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.PaymentResponse;
 import com.example.Reservation.dtos.PaymentSuccessResponse;
-import com.example.Reservation.dtos.RevenueResponseDto;
 import com.example.Reservation.entities.Guest;
+import com.example.Reservation.entities.LoyaltyPointsHistory;
 import com.example.Reservation.entities.Payment;
 import com.example.Reservation.entities.Reservation;
+import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.PaymentMapper;
-import com.example.Reservation.repositories.CancellationRepository;
-import com.example.Reservation.repositories.GuestRepository;
-import com.example.Reservation.repositories.PaymentRepository;
-import com.example.Reservation.repositories.ReservationRepository;
+import com.example.Reservation.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +25,13 @@ public class PaymentServiceImpl implements PaymentService{
 
     private final GuestRepository guestRepository;
 
-    private final CancellationRepository cancellationRepository;
+    private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, CancellationRepository cancellationRepository) {
+    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository) {
         this.paymentRepository = paymentRepository;
         this.reservationRepository = reservationRepository;
         this.guestRepository = guestRepository;
-        this.cancellationRepository = cancellationRepository;
+        this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
     }
 
     @Override
@@ -64,6 +62,7 @@ public class PaymentServiceImpl implements PaymentService{
         guest.setLoyaltyPoints(updatedLoyaltyPoints);
         guestRepository.save(guest);
 
+        saveLoyaltyPointsHistory(guest,pointsUseTo);
         return new PaymentSuccessResponse(totalPaidAmount,updatedLoyaltyPoints);
 
     }
@@ -74,6 +73,15 @@ public class PaymentServiceImpl implements PaymentService{
         List<Payment> payments=paymentRepository.getByReservation_Id(reservationId);
 
         return payments.stream().map(PaymentMapper::toResponseDto).toList();
+    }
+
+    private void saveLoyaltyPointsHistory(Guest guest, Integer points){
+
+        LoyaltyPointsHistory history=new LoyaltyPointsHistory();
+        history.setGuest(guest);
+        history.setPoints(points);
+        history.setPointsType(PointsType.REDEEMED);
+        loyaltyPointsHistoryRepository.save(history);
     }
 
 }

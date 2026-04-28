@@ -4,15 +4,14 @@ import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
 import com.example.Reservation.dtos.RevenueResponseDto;
 import com.example.Reservation.entities.Guest;
+import com.example.Reservation.entities.LoyaltyPointsHistory;
 import com.example.Reservation.entities.Reservation;
+import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.ReservationMapper;
-import com.example.Reservation.repositories.CancellationRepository;
-import com.example.Reservation.repositories.GuestRepository;
-import com.example.Reservation.repositories.PaymentRepository;
-import com.example.Reservation.repositories.ReservationRepository;
+import com.example.Reservation.repositories.*;
 import com.example.Reservation.specifications.ReservationSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -34,12 +33,20 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final CancellationRepository cancellationRepository;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, EmailService emailService, GuestRepository guestRepository, PaymentRepository paymentRepository, CancellationRepository cancellationRepository) {
+    private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
+
+    public ReservationServiceImpl(ReservationRepository reservationRepository,
+                                  EmailService emailService,
+                                  GuestRepository guestRepository,
+                                  PaymentRepository paymentRepository,
+                                  CancellationRepository cancellationRepository,
+                                  LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository) {
         this.reservationRepository = reservationRepository;
         this.emailService = emailService;
         this.guestRepository = guestRepository;
         this.paymentRepository = paymentRepository;
         this.cancellationRepository = cancellationRepository;
+        this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
     }
 
     @Override
@@ -68,14 +75,21 @@ public class ReservationServiceImpl implements ReservationService{
     public ReservationResponse confirmBooking(Long id) {
         Reservation reservation=reservationRepository.findById(id).orElseThrow(()->new ReservationNotFoundException("Reservation not found..."));
 
+        if(reservation.getStatus()!=ReservationStatus.PENDING)
+            throw new RuntimeException("Only pending reservations can be confirmed");
+
         reservation.setStatus(ReservationStatus.CONFIRMED);
 
         Guest guest= reservation.getGuest();
         int newPoints=calculateLoyaltyPoints(reservation);
-        guest.setLoyaltyPoints(newPoints);
+
+        saveLoyaltyPointsHistory(guest,newPoints);
+        guest.setLoyaltyPoints(guest.getLoyaltyPoints()+newPoints);
         guestRepository.save(guest);
 
         reservationRepository.save(reservation);
+
+
 
         emailService.sendMail(reservation);
 
@@ -130,7 +144,16 @@ public class ReservationServiceImpl implements ReservationService{
 
         int days= (int)ChronoUnit.DAYS.between(reservation.getArrivalDate(),reservation.getDepartureDate());
 
-        return reservation.getGuest().getLoyaltyPoints()+days*10;
+        return days*10;
 
+    }
+
+    private void saveLoyaltyPointsHistory(Guest guest, Integer points){
+
+        LoyaltyPointsHistory history=new LoyaltyPointsHistory();
+        history.setGuest(guest);
+        history.setPoints(points);
+        history.setPointsType(PointsType.EARNED);
+        loyaltyPointsHistoryRepository.save(history);
     }
 }

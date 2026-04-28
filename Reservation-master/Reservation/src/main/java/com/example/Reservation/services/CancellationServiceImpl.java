@@ -2,19 +2,14 @@ package com.example.Reservation.services;
 
 
 import com.example.Reservation.dtos.CancellationResponseDto;
-import com.example.Reservation.entities.Cancellation;
-import com.example.Reservation.entities.CancellationPolicy;
-import com.example.Reservation.entities.Guest;
-import com.example.Reservation.entities.Reservation;
+import com.example.Reservation.entities.*;
+import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.RefundStatus;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.exceptions.CancellationNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.CancellationMapper;
-import com.example.Reservation.repositories.CancellationPolicyRepository;
-import com.example.Reservation.repositories.CancellationRepository;
-import com.example.Reservation.repositories.GuestRepository;
-import com.example.Reservation.repositories.ReservationRepository;
+import com.example.Reservation.repositories.*;
 import com.example.Reservation.specifications.CancellationSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,12 +32,15 @@ public class CancellationServiceImpl implements CancellationService{
 
     private final EmailService emailService;
 
-    public CancellationServiceImpl(CancellationPolicyRepository cancellationPolicyRepository, CancellationRepository cancellationRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, EmailService emailService) {
+    private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
+
+    public CancellationServiceImpl(CancellationPolicyRepository cancellationPolicyRepository, CancellationRepository cancellationRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, EmailService emailService, LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository) {
         this.cancellationPolicyRepository = cancellationPolicyRepository;
         this.cancellationRepository = cancellationRepository;
         this.reservationRepository = reservationRepository;
         this.guestRepository = guestRepository;
         this.emailService = emailService;
+        this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
     }
 
     @Override
@@ -82,10 +80,13 @@ public class CancellationServiceImpl implements CancellationService{
 
 
         Guest guest=reservation.getGuest();
-        int newPoints=Math.max(calculateCancellationLoyaltyPoints(reservation),0);
+        int cancelledPoints=calculateCancellationLoyaltyPoints(reservation);
+        int newPoints= Math.max(guest.getLoyaltyPoints()-cancelledPoints,0);
         guest.setLoyaltyPoints(newPoints);
 
         guestRepository.save(guest);
+
+        saveLoyaltyPointsHistory(guest,cancelledPoints,PointsType.EXPIRED);
 
 
 
@@ -96,8 +97,9 @@ public class CancellationServiceImpl implements CancellationService{
                                                 emailService.sendMail(waiting);
                                                 Guest waitedGuest= waiting.getGuest();
                                                 int updatedPoints=calculateConfirmationLoyaltyPoints(waiting);
-                                                waitedGuest.setLoyaltyPoints(updatedPoints);
-                                                guestRepository.save(waitedGuest);});
+                                                waitedGuest.setLoyaltyPoints(waitedGuest.getLoyaltyPoints()+updatedPoints);
+                                                guestRepository.save(waitedGuest);
+                                                saveLoyaltyPointsHistory(waitedGuest,updatedPoints,PointsType.EARNED);});
 
         return refundAmount;
     }
@@ -138,7 +140,7 @@ public class CancellationServiceImpl implements CancellationService{
 
         int days= (int)ChronoUnit.DAYS.between(reservation.getArrivalDate(),reservation.getDepartureDate());
 
-        return reservation.getGuest().getLoyaltyPoints()-days*10;
+        return days*10;
 
     }
 
@@ -146,8 +148,17 @@ public class CancellationServiceImpl implements CancellationService{
 
         int days= (int)ChronoUnit.DAYS.between(reservation.getArrivalDate(),reservation.getDepartureDate());
 
-        return reservation.getGuest().getLoyaltyPoints()+days*10;
+        return days*10;
 
+    }
+
+    private void saveLoyaltyPointsHistory(Guest guest, Integer points,PointsType pointsType){
+
+        LoyaltyPointsHistory history=new LoyaltyPointsHistory();
+        history.setGuest(guest);
+        history.setPoints(points);
+        history.setPointsType(pointsType);
+        loyaltyPointsHistoryRepository.save(history);
     }
 
 }
