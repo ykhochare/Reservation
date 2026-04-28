@@ -3,6 +3,7 @@ package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.CancellationResponseDto;
 import com.example.Reservation.entities.*;
+import com.example.Reservation.enums.LoyaltyTier;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.RefundStatus;
 import com.example.Reservation.enums.ReservationStatus;
@@ -81,8 +82,12 @@ public class CancellationServiceImpl implements CancellationService{
 
         Guest guest=reservation.getGuest();
         int cancelledPoints=calculateCancellationLoyaltyPoints(reservation);
-        int newPoints= Math.max(guest.getLoyaltyPoints()-cancelledPoints,0);
-        guest.setLoyaltyPoints(newPoints);
+        int newLoyaltyPoints= Math.max(guest.getLoyaltyPoints()-cancelledPoints,0);
+        guest.setLoyaltyPoints(newLoyaltyPoints);
+
+        int newTotalEarned=Math.max(guest.getTotalPointsEarned()-cancelledPoints,0);
+        guest.setTotalPointsEarned(newTotalEarned);
+        updateLoyaltyTier(guest);
 
         guestRepository.save(guest);
 
@@ -98,6 +103,8 @@ public class CancellationServiceImpl implements CancellationService{
                                                 Guest waitedGuest= waiting.getGuest();
                                                 int updatedPoints=calculateConfirmationLoyaltyPoints(waiting);
                                                 waitedGuest.setLoyaltyPoints(waitedGuest.getLoyaltyPoints()+updatedPoints);
+                                                waitedGuest.setTotalPointsEarned(waitedGuest.getTotalPointsEarned()+updatedPoints);
+                                                updateLoyaltyTier(waitedGuest);
                                                 guestRepository.save(waitedGuest);
                                                 saveLoyaltyPointsHistory(waitedGuest,updatedPoints,PointsType.EARNED);});
 
@@ -159,6 +166,17 @@ public class CancellationServiceImpl implements CancellationService{
         history.setPoints(points);
         history.setPointsType(pointsType);
         loyaltyPointsHistoryRepository.save(history);
+    }
+
+    private void updateLoyaltyTier(Guest guest) {
+        int totalEarned = guest.getTotalPointsEarned();
+        if (totalEarned >= 1000) {
+            guest.setLoyaltyTier(LoyaltyTier.GOLD);
+        } else if (totalEarned >= 500) {
+            guest.setLoyaltyTier(LoyaltyTier.SILVER);
+        } else {
+            guest.setLoyaltyTier(LoyaltyTier.BRONZE);
+        }
     }
 
 }

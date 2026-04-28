@@ -6,6 +6,7 @@ import com.example.Reservation.dtos.RevenueResponseDto;
 import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.LoyaltyPointsHistory;
 import com.example.Reservation.entities.Reservation;
+import com.example.Reservation.enums.LoyaltyTier;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.exceptions.GuestNotFoundException;
@@ -85,6 +86,8 @@ public class ReservationServiceImpl implements ReservationService{
 
         saveLoyaltyPointsHistory(guest,newPoints);
         guest.setLoyaltyPoints(guest.getLoyaltyPoints()+newPoints);
+        guest.setTotalPointsEarned(guest.getTotalPointsEarned()+newPoints);
+        updateLoyaltyTier(guest);
         guestRepository.save(guest);
 
         reservationRepository.save(reservation);
@@ -155,5 +158,16 @@ public class ReservationServiceImpl implements ReservationService{
         history.setPoints(points);
         history.setPointsType(PointsType.EARNED);
         loyaltyPointsHistoryRepository.save(history);
+    }
+
+    private void updateLoyaltyTier(Guest guest) {
+        int totalEarned = guest.getTotalPointsEarned();
+        if (totalEarned >= 1000) {
+            guest.setLoyaltyTier(LoyaltyTier.GOLD);
+        } else if (totalEarned >= 500) {
+            guest.setLoyaltyTier(LoyaltyTier.SILVER);
+        } else {
+            guest.setLoyaltyTier(LoyaltyTier.BRONZE);
+        }
     }
 }

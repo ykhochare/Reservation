@@ -1,5 +1,6 @@
 package com.example.Reservation.entities;
 
+import com.example.Reservation.enums.LoyaltyTier;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,12 @@ public class Guest {
 
     private String phone;
 
-    private Integer loyaltyPoints;   // total points available to redeem
+    private Integer loyaltyPoints;
+
+    private Integer totalPointsEarned;
+
+    @Enumerated(EnumType.STRING)
+    private LoyaltyTier loyaltyTier;
 
     private LocalDateTime registeredAt;
 
