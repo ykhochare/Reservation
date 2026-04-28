@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @EnableScheduling
 public class JobScheduler {
@@ -18,10 +20,13 @@ public class JobScheduler {
 
     private final Job reservationJob;
 
-    public JobScheduler(JobLauncher jobLauncher, Job cancellationJob, Job reservationJob) {
+    private final Job expireWaitingJob;
+
+    public JobScheduler(JobLauncher jobLauncher, Job cancellationJob, Job reservationJob, Job expireWaitingJob) {
         this.jobLauncher = jobLauncher;
         this.cancellationJob = cancellationJob;
         this.reservationJob = reservationJob;
+        this.expireWaitingJob = expireWaitingJob;
     }
 
     @Scheduled(cron = "0 0 7 * * ?")
@@ -41,5 +46,13 @@ public class JobScheduler {
                         .addLong("time", System.currentTimeMillis())
                         .toJobParameters());
 
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void runExpireWaitingJob() throws Exception {
+        JobParameters params = new JobParametersBuilder()
+                .addLocalDateTime("runTime", LocalDateTime.now())
+                .toJobParameters();
+        jobLauncher.run(expireWaitingJob, params);
     }
 }
