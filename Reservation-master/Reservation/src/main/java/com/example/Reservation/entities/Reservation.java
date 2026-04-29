@@ -54,6 +54,11 @@ public class Reservation {
     @JoinColumn(name = "guest_id")
     private Guest guest;
 
+    //Many-to-One with TravelAgent
+    @ManyToOne
+    @JoinColumn(name = "agent_id", nullable = true)
+    private TravelAgent travelAgent;
+
     @PrePersist
     public void createdAt(){
         this.createdAt=LocalDateTime.now();

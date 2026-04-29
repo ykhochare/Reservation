@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation,Long>, JpaSpecificationExecutor<Reservation> {
@@ -38,4 +39,6 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long>, 
             LocalDate date,
             Pageable pageable
     );
+
+    List<Reservation> findByTravelAgentAgentIdAndStatus(Long agentId, ReservationStatus status);
 }

@@ -57,4 +57,11 @@ public class ReservationController {
 
         return ResponseEntity.ok(revenueResponse);
     }
+
+    @PatchMapping("/confirm-by-agent/{agentId}")
+    public ResponseEntity<String> confirmByAgent(@PathVariable Long agentId){
+        int count=reservationService.confirmAgentReservations(agentId);
+
+        return ResponseEntity.ok(count+" reservations are confirmed.");
+    }
 }

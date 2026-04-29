@@ -3,9 +3,8 @@ package com.example.Reservation.services;
 import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
 import com.example.Reservation.dtos.RevenueResponseDto;
-import com.example.Reservation.entities.Guest;
-import com.example.Reservation.entities.LoyaltyPointsHistory;
-import com.example.Reservation.entities.Reservation;
+import com.example.Reservation.entities.*;
+import com.example.Reservation.enums.CommissionStatus;
 import com.example.Reservation.enums.LoyaltyTier;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
@@ -36,18 +35,26 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
 
+    private final AgentCommissionRepository agentCommissionRepository;
+
+    private final TravelAgentRepository travelAgentRepository;
+
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   EmailService emailService,
                                   GuestRepository guestRepository,
                                   PaymentRepository paymentRepository,
                                   CancellationRepository cancellationRepository,
-                                  LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository) {
+                                  LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository,
+                                  AgentCommissionRepository agentCommissionRepository,
+                                  TravelAgentRepository travelAgentRepository) {
         this.reservationRepository = reservationRepository;
         this.emailService = emailService;
         this.guestRepository = guestRepository;
         this.paymentRepository = paymentRepository;
         this.cancellationRepository = cancellationRepository;
         this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
+        this.agentCommissionRepository = agentCommissionRepository;
+        this.travelAgentRepository = travelAgentRepository;
     }
 
     @Override
@@ -137,6 +144,31 @@ public class ReservationServiceImpl implements ReservationService{
 
         double netRevenue=totalRevenue-totalRefunds;
         return new RevenueResponseDto(bungalowId,totalRevenue,totalRefunds,netRevenue);
+    }
+
+    @Override
+    public int confirmAgentReservations(Long agentId) {
+
+        List<Reservation> agentReservations=reservationRepository.findByTravelAgentAgentIdAndStatus(agentId,ReservationStatus.PENDING);
+
+        TravelAgent agent=travelAgentRepository.findById(agentId).orElseThrow(()->new RuntimeException("Agent not found..."));
+
+        for(Reservation reservation:agentReservations){
+            reservation.setStatus(ReservationStatus.CONFIRMED);
+            reservationRepository.save(reservation);
+
+            double commissionAmount=reservation.getTotalAmount() * agent.getCommissionRate() * 0.01;
+
+            AgentCommission commission=new AgentCommission();
+            commission.setReservation(reservation);
+            commission.setTravelAgent(agent);
+            commission.setCommissionAmount(commissionAmount);
+            commission.setStatus(CommissionStatus.PENDING);
+            agentCommissionRepository.save(commission);
+
+        }
+
+        return agentReservations.size();
     }
 
     private boolean isValidReservation(LocalDate arrival,LocalDate departure){
