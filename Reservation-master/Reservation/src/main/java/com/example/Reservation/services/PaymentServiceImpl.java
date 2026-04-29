@@ -40,6 +40,9 @@ public class PaymentServiceImpl implements PaymentService{
 
         Reservation reservation=reservationRepository.findById(reservationId).orElseThrow(()->new ReservationNotFoundException("Reservation not found..."));
 
+        if(pointsUseTo<reservation.getGuest().getLoyaltyPoints())
+            throw new RuntimeException("You do not have enough loyalty points.");
+
         List<Payment> payments=reservation.getPayments();
 
         double paidAmount=payments.stream().mapToDouble(Payment::getAmount).sum();

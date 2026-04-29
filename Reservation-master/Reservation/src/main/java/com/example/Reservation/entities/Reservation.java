@@ -38,10 +38,14 @@ public class Reservation {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Version
+    private Long version;
+
     // One-to-One with Cancellation
     @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
     private Cancellation cancellation;
 
+    // One-to-Many with payments
     @OneToMany(mappedBy = "reservation",cascade = CascadeType.ALL)
     private List<Payment> payments;
 

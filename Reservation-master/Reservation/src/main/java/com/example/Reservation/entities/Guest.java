@@ -33,6 +33,9 @@ public class Guest {
 
     private LocalDateTime registeredAt;
 
+    @Version
+    private Long version;
+
     @OneToMany(mappedBy = "guest")
     private List<Reservation> reservations;
 
