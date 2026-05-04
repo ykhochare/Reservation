@@ -47,9 +47,10 @@ public class ExcelController {
     }
 
     @PostMapping("/reservation/upload")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file,
+                                         @RequestParam(required = false) Long agentId) {
 
-        excelService.uploadExcel(file);
+        excelService.uploadExcel(file,agentId);
 
         return ResponseEntity.ok("Excel uploaded successfully!");
     }

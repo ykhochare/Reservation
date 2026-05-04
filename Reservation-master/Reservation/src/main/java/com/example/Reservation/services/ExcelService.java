@@ -3,9 +3,11 @@ package com.example.Reservation.services;
 import com.example.Reservation.dtos.ReservationResponse;
 import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.Reservation;
+import com.example.Reservation.entities.TravelAgent;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.ReservationRepository;
+import com.example.Reservation.repositories.TravelAgentRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
@@ -26,9 +28,12 @@ public class ExcelService {
 
     private final GuestRepository guestRepository;
 
-    public ExcelService(ReservationRepository reservationRepository, GuestRepository guestRepository) {
+    private final TravelAgentRepository agentRepository;
+
+    public ExcelService(ReservationRepository reservationRepository, GuestRepository guestRepository, TravelAgentRepository agentRepository) {
         this.reservationRepository = reservationRepository;
         this.guestRepository = guestRepository;
+        this.agentRepository = agentRepository;
     }
 
     public ByteArrayInputStream generateExcel(List<ReservationResponse> reservations) {
@@ -73,7 +78,7 @@ public class ExcelService {
     }
 
 
-    public void uploadExcel(MultipartFile file) {
+    public void uploadExcel(MultipartFile file,Long agentId) {
 
         try (InputStream is = file.getInputStream();
              Workbook workbook = new XSSFWorkbook(is)) {
@@ -83,6 +88,11 @@ public class ExcelService {
 
             // Skip header
             if (rows.hasNext()) rows.next();
+
+            TravelAgent agent=null;
+
+            if(agentId!=null)
+                agent=agentRepository.findById(agentId).orElseThrow(()->new RuntimeException("Travel agent not found..."));
 
             List<Reservation> reservations = new ArrayList<>();
 
@@ -117,6 +127,8 @@ public class ExcelService {
 
                 //Guest
                 reservation.setGuest(guest);
+
+                reservation.setTravelAgent(agent);
 
                 reservations.add(reservation);
             }
