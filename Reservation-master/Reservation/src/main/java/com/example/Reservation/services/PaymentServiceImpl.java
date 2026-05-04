@@ -65,7 +65,9 @@ public class PaymentServiceImpl implements PaymentService{
         guest.setLoyaltyPoints(updatedLoyaltyPoints);
         guestRepository.save(guest);
 
-        saveLoyaltyPointsHistory(guest,pointsUseTo);
+        if(pointsUseTo != 0)
+            saveLoyaltyPointsHistory(guest,pointsUseTo);
+
         return new PaymentSuccessResponse(totalPaidAmount,updatedLoyaltyPoints);
 
     }

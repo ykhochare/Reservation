@@ -2,6 +2,7 @@ package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.AgentCommissionResponse;
 import com.example.Reservation.dtos.CommissionStatement;
+import com.example.Reservation.dtos.RecoveryResponse;
 import com.example.Reservation.entities.AgentCommission;
 import com.example.Reservation.enums.CommissionStatus;
 import com.example.Reservation.mappers.AgentCommissionMapper;
@@ -42,5 +43,27 @@ public class AgentCommissionServiceImpl implements AgentCommissionService{
         return new CommissionStatement(agentId,yearMonth.toString(),totalCommissionEarned,totalCommissionReversed,netCommission);
 
 
+    }
+
+    @Override
+    public RecoveryResponse getAllRecoveries() {
+
+        List<AgentCommission> commissions=agentCommissionRepository.findByRecoveryRequiredTrue();
+
+        List<AgentCommissionResponse> commissionResponses=commissions.stream().map(AgentCommissionMapper::toResponseDTo).toList();
+
+        double totalAmountToRecover=commissions.stream().mapToDouble(AgentCommission::getCommissionAmount).sum();
+
+        int totalCommissionCount= commissions.size();
+
+        return new RecoveryResponse(totalAmountToRecover,totalCommissionCount,commissionResponses);
+    }
+
+    @Override
+    public void payCommission(Long commissionId) {
+        AgentCommission agentCommission=agentCommissionRepository.findById(commissionId).orElseThrow(()->new RuntimeException("Commission Not Found"));
+
+        agentCommission.setStatus(CommissionStatus.PAID);
+        agentCommissionRepository.save(agentCommission);
     }
 }

@@ -12,6 +12,8 @@ public class AgentCommissionResponse {
 
     private Long reservationId;
 
+    private String agentName;
+
     private Double commissionAmount;
 
     private CommissionStatus status;

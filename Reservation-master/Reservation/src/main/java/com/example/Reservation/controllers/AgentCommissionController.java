@@ -2,6 +2,7 @@ package com.example.Reservation.controllers;
 
 import com.example.Reservation.dtos.AgentCommissionResponse;
 import com.example.Reservation.dtos.CommissionStatement;
+import com.example.Reservation.dtos.RecoveryResponse;
 import com.example.Reservation.services.AgentCommissionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,19 @@ public class AgentCommissionController {
         CommissionStatement statement=agentCommissionService.getByAgentAndMonth(agentId,yearMonth);
 
         return ResponseEntity.ok(statement);
+    }
+
+    @GetMapping("/recovery-required")
+    public ResponseEntity<RecoveryResponse> getAllRequiredRecoveries(){
+        RecoveryResponse recoveryResponse=agentCommissionService.getAllRecoveries();
+
+        return ResponseEntity.ok(recoveryResponse);
+    }
+
+    @PatchMapping("/{commissionId}/pay")
+    public ResponseEntity<String> pay(@PathVariable Long commissionId){
+        agentCommissionService.payCommission(commissionId);
+
+        return ResponseEntity.ok("Commission paid");
     }
 }

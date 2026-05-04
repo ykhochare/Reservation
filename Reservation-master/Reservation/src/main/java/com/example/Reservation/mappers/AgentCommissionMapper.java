@@ -9,6 +9,7 @@ public class AgentCommissionMapper {
         AgentCommissionResponse response=new AgentCommissionResponse();
         response.setId(commission.getId());
         response.setReservationId(commission.getReservation().getId());
+        response.setAgentName(commission.getTravelAgent().getAgentName());
         response.setCommissionAmount(commission.getCommissionAmount());
         response.setStatus(commission.getStatus());
 

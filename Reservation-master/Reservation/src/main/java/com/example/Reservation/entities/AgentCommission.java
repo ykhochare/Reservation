@@ -24,6 +24,8 @@ public class AgentCommission {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
+    private Boolean recoveryRequired = false;
+
     private Double commissionAmount;
 
     @Enumerated(EnumType.STRING)

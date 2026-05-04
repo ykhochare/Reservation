@@ -59,6 +59,10 @@ public class Reservation {
     @JoinColumn(name = "agent_id", nullable = true)
     private TravelAgent travelAgent;
 
+    //One-to-One with AgentCommission
+    @OneToOne(mappedBy = "reservation")
+    private AgentCommission agentCommission;
+
     @PrePersist
     public void createdAt(){
         this.createdAt=LocalDateTime.now();

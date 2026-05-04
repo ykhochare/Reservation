@@ -17,4 +17,7 @@ public interface AgentCommissionRepository extends JpaRepository<AgentCommission
             @Param("year") int year,
             @Param("month") int month
     );
+
+    List<AgentCommission> findByRecoveryRequiredTrue();
+
 }
