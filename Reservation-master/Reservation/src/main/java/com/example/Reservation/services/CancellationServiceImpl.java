@@ -3,10 +3,7 @@ package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.CancellationResponseDto;
 import com.example.Reservation.entities.*;
-import com.example.Reservation.enums.LoyaltyTier;
-import com.example.Reservation.enums.PointsType;
-import com.example.Reservation.enums.RefundStatus;
-import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.enums.*;
 import com.example.Reservation.exceptions.CancellationNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.CancellationMapper;
@@ -35,13 +32,22 @@ public class CancellationServiceImpl implements CancellationService{
 
     private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
 
-    public CancellationServiceImpl(CancellationPolicyRepository cancellationPolicyRepository, CancellationRepository cancellationRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, EmailService emailService, LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository) {
+    private final AgentCommissionRepository agentCommissionRepository;
+
+    public CancellationServiceImpl(CancellationPolicyRepository cancellationPolicyRepository,
+                                   CancellationRepository cancellationRepository,
+                                   ReservationRepository reservationRepository,
+                                   GuestRepository guestRepository,
+                                   EmailService emailService,
+                                   LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository,
+                                   AgentCommissionRepository agentCommissionRepository) {
         this.cancellationPolicyRepository = cancellationPolicyRepository;
         this.cancellationRepository = cancellationRepository;
         this.reservationRepository = reservationRepository;
         this.guestRepository = guestRepository;
         this.emailService = emailService;
         this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
+        this.agentCommissionRepository = agentCommissionRepository;
     }
 
     @Override
@@ -78,7 +84,14 @@ public class CancellationServiceImpl implements CancellationService{
         reservationRepository.save(reservation);
         cancellationRepository.save(cancellation);
 
+        AgentCommission agentCommission=reservation.getAgentCommission();
+        if(agentCommission!=null) {
 
+            if(agentCommission.getStatus()==CommissionStatus.PAID)
+                agentCommission.setRecoveryRequired(true);
+            agentCommission.setStatus(CommissionStatus.REVERSED);
+            agentCommissionRepository.save(agentCommission);
+        }
 
         Guest guest=reservation.getGuest();
         int cancelledPoints=calculateCancellationLoyaltyPoints(reservation);
@@ -92,9 +105,6 @@ public class CancellationServiceImpl implements CancellationService{
         guestRepository.save(guest);
 
         saveLoyaltyPointsHistory(guest,cancelledPoints,PointsType.EXPIRED);
-
-
-
 
         reservationRepository.findTopWaitingReservation(reservation.getBungalowId(),"WAITING")
                 .ifPresent(waiting->{waiting.setStatus(ReservationStatus.CONFIRMED);
