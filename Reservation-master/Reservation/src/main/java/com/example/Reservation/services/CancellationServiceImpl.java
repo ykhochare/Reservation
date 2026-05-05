@@ -56,12 +56,6 @@ public class CancellationServiceImpl implements CancellationService{
 
         Reservation reservation=reservationRepository.findById(reservationId).orElseThrow(()->new ReservationNotFoundException("Reservation not found..."));
 
-        if(reservation.getStatus()== ReservationStatus.PENDING){
-            reservation.setStatus(ReservationStatus.CANCELLED);
-            reservationRepository.save(reservation);
-            return 0.0;
-        }
-
         if(reservation.getStatus()!=ReservationStatus.CONFIRMED){
             throw new RuntimeException("Only confirmed reservations can be cancel");
         }
