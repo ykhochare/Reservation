@@ -4,6 +4,8 @@ import com.example.Reservation.dtos.ReservationResponse;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.services.ExcelService;
 import com.example.Reservation.services.ReservationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.List;
 
+@Tag(name = "Excel",description = "APIs for managing importing and exporting reservations via Excel")
 @RestController
 @RequestMapping("/api/excel")
 public class ExcelController {
@@ -28,6 +31,7 @@ public class ExcelController {
         this.excelService = excelService;
     }
 
+    @Operation(summary = "Download reservations as Excel",description = "Exports reservations to Excel file with optional filters by status ,arrival and departure date and bungalow")
     @GetMapping("/reservation/download")
     public ResponseEntity<InputStreamResource> downloadReservationExcel(@RequestParam(required = false)ReservationStatus status,
                                                                         @RequestParam(required = false)LocalDate arrival,
@@ -46,6 +50,7 @@ public class ExcelController {
                 .body(new InputStreamResource(in));
     }
 
+    @Operation(summary = "Upload reservations from Excel",description = "Imports reservations from Excel file.Optionally link to a travel agent by passing agentId")
     @PostMapping("/reservation/upload")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file,
                                          @RequestParam(required = false) Long agentId) {
