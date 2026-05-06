@@ -2,12 +2,14 @@ package com.example.Reservation.dtos;
 
 import com.example.Reservation.enums.ReservationStatus;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ReservationResponse {
     private Long id;
     private Long bungalowId;

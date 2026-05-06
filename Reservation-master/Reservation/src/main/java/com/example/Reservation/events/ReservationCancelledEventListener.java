@@ -6,6 +6,7 @@ import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.enums.CommissionStatus;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.mappers.ReservationMapper;
 import com.example.Reservation.repositories.AgentCommissionRepository;
 import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.ReservationRepository;
@@ -71,7 +72,7 @@ public class ReservationCancelledEventListener {
         reservationRepository.findTopWaitingReservation(reservation.getBungalowId(),"WAITING")
                 .ifPresent(waiting->{waiting.setStatus(ReservationStatus.CONFIRMED);
                     reservationRepository.save(waiting);
-                    emailService.sendMail(waiting);
+                    emailService.sendMail(ReservationMapper.toResponseDto(waiting));
                     Guest waitedGuest= waiting.getGuest();
                     int updatedPoints=loyaltyPointsService.calculateConfirmationLoyaltyPoints(waiting);
                     waitedGuest.setLoyaltyPoints(waitedGuest.getLoyaltyPoints()+updatedPoints);

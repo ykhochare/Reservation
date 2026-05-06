@@ -1,5 +1,6 @@
 package com.example.Reservation.services;
 
+import com.example.Reservation.dtos.ReservationResponse;
 import com.example.Reservation.entities.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,9 +13,9 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendMail(Reservation reservation){
+    public void sendMail(ReservationResponse reservation){
 
-        String body = "Hello " + reservation.getGuest().getGuestName() + ",\n\n"
+        String body = "Hello " + reservation.getGuestName() + ",\n\n"
                 + "Your reservation is successfully confirmed.\n\n"
                 + "Reservation Details:\n"
                 + "Reservation ID: " + reservation.getId() + "\n"
@@ -23,7 +24,7 @@ public class EmailService {
                 + "Thank you for choosing our service!";
 
         SimpleMailMessage message=new SimpleMailMessage();
-        message.setTo(reservation.getGuest().getGuestEmail());
+        message.setTo(reservation.getGuestEmail());
         message.setSubject("Confirm Reservation");
         message.setText(body);
         message.setFrom("yashkhochare279@gmail.com");

@@ -1,5 +1,6 @@
 package com.example.Reservation.services;
 
+import com.example.Reservation.config.RabbitMQConfig;
 import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
 import com.example.Reservation.dtos.RevenueResponseDto;
@@ -8,11 +9,13 @@ import com.example.Reservation.enums.CommissionStatus;
 import com.example.Reservation.enums.LoyaltyTier;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.events.ReservationConfirmedEvent;
 import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.ReservationMapper;
 import com.example.Reservation.repositories.*;
 import com.example.Reservation.specifications.ReservationSpecification;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +27,6 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService{
 
     private final ReservationRepository reservationRepository;
-
-    private final EmailService emailService;
 
     private final GuestRepository guestRepository;
 
@@ -39,22 +40,24 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final TravelAgentRepository travelAgentRepository;
 
+    private final RabbitTemplate rabbitTemplate;
+
     public ReservationServiceImpl(ReservationRepository reservationRepository,
-                                  EmailService emailService,
                                   GuestRepository guestRepository,
                                   PaymentRepository paymentRepository,
                                   CancellationRepository cancellationRepository,
                                   LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository,
                                   AgentCommissionRepository agentCommissionRepository,
-                                  TravelAgentRepository travelAgentRepository) {
+                                  TravelAgentRepository travelAgentRepository,
+                                  RabbitTemplate rabbitTemplate) {
         this.reservationRepository = reservationRepository;
-        this.emailService = emailService;
         this.guestRepository = guestRepository;
         this.paymentRepository = paymentRepository;
         this.cancellationRepository = cancellationRepository;
         this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
         this.agentCommissionRepository = agentCommissionRepository;
         this.travelAgentRepository = travelAgentRepository;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
@@ -99,11 +102,15 @@ public class ReservationServiceImpl implements ReservationService{
 
         reservationRepository.save(reservation);
 
+        ReservationResponse response=ReservationMapper.toResponseDto(reservation);
 
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfig.CONFIRMATION_EXCHANGE,
+                RabbitMQConfig.CONFIRMATION_ROUTING_KEY,
+                new ReservationConfirmedEvent(response)
+        );
 
-        emailService.sendMail(reservation);
-
-        return ReservationMapper.toResponseDto(reservation);
+        return response;
     }
 
     @Override
