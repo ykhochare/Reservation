@@ -57,6 +57,9 @@ dependencies {
     // Spring Batch
     implementation 'org.springframework.boot:spring-boot-starter-batch'
 
+    //Rabbit MQ
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

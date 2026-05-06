@@ -4,12 +4,14 @@ package com.example.Reservation.services;
 import com.example.Reservation.dtos.CancellationResponseDto;
 import com.example.Reservation.entities.*;
 import com.example.Reservation.enums.*;
+import com.example.Reservation.events.ReservationCancelledEvent;
 import com.example.Reservation.exceptions.CancellationNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.CancellationMapper;
 import com.example.Reservation.repositories.*;
 import com.example.Reservation.specifications.CancellationSpecification;
 import jakarta.transaction.Transactional;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -26,28 +28,16 @@ public class CancellationServiceImpl implements CancellationService{
 
     private final ReservationRepository reservationRepository;
 
-    private final GuestRepository guestRepository;
-
-    private final EmailService emailService;
-
-    private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
-
-    private final AgentCommissionRepository agentCommissionRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public CancellationServiceImpl(CancellationPolicyRepository cancellationPolicyRepository,
                                    CancellationRepository cancellationRepository,
                                    ReservationRepository reservationRepository,
-                                   GuestRepository guestRepository,
-                                   EmailService emailService,
-                                   LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository,
-                                   AgentCommissionRepository agentCommissionRepository) {
+                                   ApplicationEventPublisher eventPublisher) {
         this.cancellationPolicyRepository = cancellationPolicyRepository;
         this.cancellationRepository = cancellationRepository;
         this.reservationRepository = reservationRepository;
-        this.guestRepository = guestRepository;
-        this.emailService = emailService;
-        this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
-        this.agentCommissionRepository = agentCommissionRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -67,7 +57,7 @@ public class CancellationServiceImpl implements CancellationService{
         double refundAmount=policy.getRefundPercentage()*reservation.getTotalAmount()*0.01;
 
         Cancellation cancellation=new Cancellation();
-        cancellation.setReason("Some issue.");
+        cancellation.setReason("Cancelled by guest.");
         cancellation.setReservation(reservation);
         cancellation.setRefundAmount(refundAmount);
         cancellation.setPolicy(policy);
@@ -78,39 +68,7 @@ public class CancellationServiceImpl implements CancellationService{
         reservationRepository.save(reservation);
         cancellationRepository.save(cancellation);
 
-        AgentCommission agentCommission=reservation.getAgentCommission();
-        if(agentCommission!=null) {
-
-            if(agentCommission.getStatus()==CommissionStatus.PAID)
-                agentCommission.setRecoveryRequired(true);
-            agentCommission.setStatus(CommissionStatus.REVERSED);
-            agentCommissionRepository.save(agentCommission);
-        }
-
-        Guest guest=reservation.getGuest();
-        int cancelledPoints=calculateCancellationLoyaltyPoints(reservation);
-        int newLoyaltyPoints= Math.max(guest.getLoyaltyPoints()-cancelledPoints,0);
-        guest.setLoyaltyPoints(newLoyaltyPoints);
-
-        int newTotalEarned=Math.max(guest.getTotalPointsEarned()-cancelledPoints,0);
-        guest.setTotalPointsEarned(newTotalEarned);
-        updateLoyaltyTier(guest);
-
-        guestRepository.save(guest);
-
-        saveLoyaltyPointsHistory(guest,cancelledPoints,PointsType.EXPIRED);
-
-        reservationRepository.findTopWaitingReservation(reservation.getBungalowId(),"WAITING")
-                .ifPresent(waiting->{waiting.setStatus(ReservationStatus.CONFIRMED);
-                                                reservationRepository.save(waiting);
-                                                emailService.sendMail(waiting);
-                                                Guest waitedGuest= waiting.getGuest();
-                                                int updatedPoints=calculateConfirmationLoyaltyPoints(waiting);
-                                                waitedGuest.setLoyaltyPoints(waitedGuest.getLoyaltyPoints()+updatedPoints);
-                                                waitedGuest.setTotalPointsEarned(waitedGuest.getTotalPointsEarned()+updatedPoints);
-                                                updateLoyaltyTier(waitedGuest);
-                                                guestRepository.save(waitedGuest);
-                                                saveLoyaltyPointsHistory(waitedGuest,updatedPoints,PointsType.EARNED);});
+        eventPublisher.publishEvent(new ReservationCancelledEvent(reservation,refundAmount));
 
         return refundAmount;
     }
@@ -145,42 +103,6 @@ public class CancellationServiceImpl implements CancellationService{
         Cancellation cancellation=cancellationRepository.findByReservation_Id(id).orElseThrow(()->new CancellationNotFoundException("Cancellation not found."));
 
         return CancellationMapper.toResponseDto(cancellation);
-    }
-
-    private int calculateCancellationLoyaltyPoints(Reservation reservation){
-
-        int days= (int)ChronoUnit.DAYS.between(reservation.getArrivalDate(),reservation.getDepartureDate());
-
-        return days*10;
-
-    }
-
-    private int calculateConfirmationLoyaltyPoints(Reservation reservation){
-
-        int days= (int)ChronoUnit.DAYS.between(reservation.getArrivalDate(),reservation.getDepartureDate());
-
-        return days*10;
-
-    }
-
-    private void saveLoyaltyPointsHistory(Guest guest, Integer points,PointsType pointsType){
-
-        LoyaltyPointsHistory history=new LoyaltyPointsHistory();
-        history.setGuest(guest);
-        history.setPoints(points);
-        history.setPointsType(pointsType);
-        loyaltyPointsHistoryRepository.save(history);
-    }
-
-    private void updateLoyaltyTier(Guest guest) {
-        int totalEarned = guest.getTotalPointsEarned();
-        if (totalEarned >= 1000) {
-            guest.setLoyaltyTier(LoyaltyTier.GOLD);
-        } else if (totalEarned >= 500) {
-            guest.setLoyaltyTier(LoyaltyTier.SILVER);
-        } else {
-            guest.setLoyaltyTier(LoyaltyTier.BRONZE);
-        }
     }
 
 }
