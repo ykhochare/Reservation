@@ -1,7 +1,6 @@
 package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.ReservationResponse;
-import com.example.Reservation.entities.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

@@ -30,7 +30,7 @@ public class GuestServiceImpl implements GuestService{
 
         Guest savedGuest=guestRepository.save(guest);
 
-        saveLoyaltyPointsHistory(savedGuest,50,PointsType.EARNED);
+        saveLoyaltyPointsHistory(savedGuest);
         return GuestMapper.toResponseDto(savedGuest);
     }
 
@@ -61,12 +61,12 @@ public class GuestServiceImpl implements GuestService{
         return GuestMapper.toResponseDto(guest);
     }
 
-    private void saveLoyaltyPointsHistory(Guest guest, Integer points, PointsType pointsType){
+    private void saveLoyaltyPointsHistory(Guest guest){
 
         LoyaltyPointsHistory history=new LoyaltyPointsHistory();
         history.setGuest(guest);
-        history.setPoints(points);
-        history.setPointsType(pointsType);
+        history.setPoints(50);
+        history.setPointsType(PointsType.EARNED);
         loyaltyPointsHistoryRepository.save(history);
     }
 }
