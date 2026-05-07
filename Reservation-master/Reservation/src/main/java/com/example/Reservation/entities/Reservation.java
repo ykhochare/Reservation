@@ -56,7 +56,7 @@ public class Reservation {
 
     //Many-to-One with TravelAgent
     @ManyToOne
-    @JoinColumn(name = "agent_id", nullable = true)
+    @JoinColumn(name = "agent_id")
     private TravelAgent travelAgent;
 
     //One-to-One with AgentCommission

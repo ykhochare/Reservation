@@ -1,10 +1,7 @@
 package com.example.Reservation.config;
 
-import com.example.Reservation.entities.Cancellation;
 import com.example.Reservation.entities.Reservation;
-import com.example.Reservation.enums.RefundStatus;
 import com.example.Reservation.enums.ReservationStatus;
-import com.example.Reservation.repositories.CancellationRepository;
 import com.example.Reservation.repositories.ReservationRepository;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
