@@ -10,7 +10,6 @@ import com.example.Reservation.enums.LoyaltyTier;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.events.EmailEvent;
-import com.example.Reservation.events.ReservationConfirmedEvent;
 import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.ReservationMapper;
