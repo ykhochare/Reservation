@@ -76,4 +76,11 @@ public class ReservationController {
 
         return ResponseEntity.ok(count+" reservations are confirmed.");
     }
+    @Operation(summary = "Checkout reservation",description = "Marks reservation as COMPLETED after guest checks out and verifies payment is done")
+    @PatchMapping("/{reservationId}/check-out")
+    public ResponseEntity<ReservationResponse> checkOut(@PathVariable Long reservationId){
+        ReservationResponse response=reservationService.checkOut(reservationId);
+
+        return ResponseEntity.ok(response);
+    }
 }

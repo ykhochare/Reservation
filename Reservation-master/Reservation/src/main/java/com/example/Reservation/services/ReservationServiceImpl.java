@@ -15,11 +15,13 @@ import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.ReservationMapper;
 import com.example.Reservation.repositories.*;
 import com.example.Reservation.specifications.ReservationSpecification;
+import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -179,6 +181,33 @@ public class ReservationServiceImpl implements ReservationService{
         }
 
         return agentReservations.size();
+    }
+
+    @Override
+    @Transactional
+    public ReservationResponse checkOut(Long reservationId) {
+
+        Reservation reservation=reservationRepository.findById(reservationId).orElseThrow(()->new ReservationNotFoundException("Reservation not found"));
+
+        List<Payment> payments=reservation.getPayments();
+
+        Double totalPaidAmount=payments.stream().mapToDouble(Payment::getAmount).sum();
+
+        if(totalPaidAmount<reservation.getTotalAmount())
+            throw new RuntimeException("Cannot checkout. Payment pending! " + "Paid: ₹" + totalPaidAmount + " Remaining: ₹" + (reservation.getTotalAmount() - totalPaidAmount));
+
+        reservation.setStatus(ReservationStatus.COMPLETED);
+        reservationRepository.save(reservation);
+
+        AgentCommission commission=reservation.getAgentCommission();
+
+        if(commission!=null){
+            commission.setStatus(CommissionStatus.PAID);
+            commission.setPaidAt(LocalDateTime.now());
+            agentCommissionRepository.save(commission);
+        }
+
+        return ReservationMapper.toResponseDto(reservation);
     }
 
     private boolean isValidReservation(LocalDate arrival,LocalDate departure){

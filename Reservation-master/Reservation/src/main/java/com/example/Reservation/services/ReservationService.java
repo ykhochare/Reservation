@@ -21,4 +21,6 @@ public interface ReservationService {
     RevenueResponseDto getRevenueByBungalow(Long bungalowId);
 
     int confirmAgentReservations(Long agentId);
+
+    ReservationResponse checkOut(Long reservationId);
 }
