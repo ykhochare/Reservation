@@ -22,11 +22,14 @@ public class JobScheduler {
 
     private final Job expireWaitingJob;
 
-    public JobScheduler(JobLauncher jobLauncher, Job cancellationJob, Job reservationJob, Job expireWaitingJob) {
+    private final Job loyaltyPointsExpiryJob;
+
+    public JobScheduler(JobLauncher jobLauncher, Job cancellationJob, Job reservationJob, Job expireWaitingJob, Job loyaltyPointsExpiryJob) {
         this.jobLauncher = jobLauncher;
         this.cancellationJob = cancellationJob;
         this.reservationJob = reservationJob;
         this.expireWaitingJob = expireWaitingJob;
+        this.loyaltyPointsExpiryJob = loyaltyPointsExpiryJob;
     }
 
     @Scheduled(cron = "0 0 7 * * ?")
@@ -54,5 +57,13 @@ public class JobScheduler {
                 .addLocalDateTime("runTime", LocalDateTime.now())
                 .toJobParameters();
         jobLauncher.run(expireWaitingJob, params);
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void runLoyaltyPointsExpiryJob() throws Exception {
+        JobParameters params = new JobParametersBuilder()
+                .addLocalDateTime("runTime", LocalDateTime.now())
+                .toJobParameters();
+        jobLauncher.run(loyaltyPointsExpiryJob, params);
     }
 }
