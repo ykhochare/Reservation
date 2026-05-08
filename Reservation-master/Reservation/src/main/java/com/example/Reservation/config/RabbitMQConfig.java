@@ -11,27 +11,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    // Confirmation constants
-    public static final String CONFIRMATION_QUEUE = "confirmation.queue";
-    public static final String CONFIRMATION_EXCHANGE = "confirmation.exchange";
-    public static final String CONFIRMATION_ROUTING_KEY = "confirmation.key";
+    // Email constants
+    public static final String EMAIL_QUEUE = "email.queue";
+    public static final String EMAIL_EXCHANGE = "email.exchange";
+    public static final String EMAIL_ROUTING_KEY = "email.key";
 
     @Bean
-    public Queue confirmationQueue() {
-        return new Queue(CONFIRMATION_QUEUE, true);
+    public Queue emailQueue() {
+        return new Queue(EMAIL_QUEUE, true);
     }
 
     @Bean
-    public DirectExchange confirmationExchange() {
-        return new DirectExchange(CONFIRMATION_EXCHANGE);
+    public DirectExchange emailExchange() {
+        return new DirectExchange(EMAIL_EXCHANGE);
     }
 
     @Bean
-    public Binding confirmationBinding(Queue confirmationQueue, DirectExchange confirmationExchange) {
+    public Binding emailBinding(Queue emailQueue, DirectExchange emailExchange) {
         return BindingBuilder
-                .bind(confirmationQueue)
-                .to(confirmationExchange)
-                .with(CONFIRMATION_ROUTING_KEY);
+                .bind(emailQueue)
+                .to(emailExchange)
+                .with(EMAIL_ROUTING_KEY);
     }
 
     @Bean

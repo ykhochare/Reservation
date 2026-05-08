@@ -6,16 +6,16 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReservationConfirmedEventListener {
+public class EmailEventListener {
 
     private final EmailService emailService;
 
-    public ReservationConfirmedEventListener(EmailService emailService) {
+    public EmailEventListener(EmailService emailService) {
         this.emailService = emailService;
     }
 
-    @RabbitListener(queues = RabbitMQConfig.CONFIRMATION_QUEUE)
-    public void handleConfirmation(ReservationConfirmedEvent event) {
-        emailService.sendMail(event.getReservation());
+    @RabbitListener(queues = RabbitMQConfig.EMAIL_QUEUE)
+    public void handleEmailEvent(EmailEvent emailEvent){
+        emailService.sendMail(emailEvent.getEmail(), emailEvent.getSubject(), emailEvent.getBody());
     }
 }

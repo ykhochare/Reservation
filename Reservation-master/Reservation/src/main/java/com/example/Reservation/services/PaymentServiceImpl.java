@@ -1,5 +1,6 @@
 package com.example.Reservation.services;
 
+import com.example.Reservation.config.RabbitMQConfig;
 import com.example.Reservation.dtos.PaymentResponse;
 import com.example.Reservation.dtos.PaymentSuccessResponse;
 import com.example.Reservation.entities.Guest;
@@ -7,10 +8,12 @@ import com.example.Reservation.entities.LoyaltyPointsHistory;
 import com.example.Reservation.entities.Payment;
 import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.enums.PointsType;
+import com.example.Reservation.events.EmailEvent;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.PaymentMapper;
 import com.example.Reservation.repositories.*;
 import jakarta.transaction.Transactional;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,11 +30,14 @@ public class PaymentServiceImpl implements PaymentService{
 
     private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository) {
+    private final RabbitTemplate rabbitTemplate;
+
+    public PaymentServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository, GuestRepository guestRepository, LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository, RabbitTemplate rabbitTemplate) {
         this.paymentRepository = paymentRepository;
         this.reservationRepository = reservationRepository;
         this.guestRepository = guestRepository;
         this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
@@ -40,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService{
 
         Reservation reservation=reservationRepository.findById(reservationId).orElseThrow(()->new ReservationNotFoundException("Reservation not found..."));
 
-        if(pointsUseTo<reservation.getGuest().getLoyaltyPoints())
+        if(pointsUseTo>reservation.getGuest().getLoyaltyPoints())
             throw new RuntimeException("You do not have enough loyalty points.");
 
         List<Payment> payments=reservation.getPayments();
@@ -68,6 +74,12 @@ public class PaymentServiceImpl implements PaymentService{
         if(pointsUseTo != 0)
             saveLoyaltyPointsHistory(guest,pointsUseTo);
 
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfig.EMAIL_EXCHANGE,
+                RabbitMQConfig.EMAIL_ROUTING_KEY,
+                new EmailEvent(guest.getGuestEmail(), "Payment Successful!",paymentSuccessEmail(guest.getGuestName(), totalPaidAmount,updatedLoyaltyPoints))
+        );
+
         return new PaymentSuccessResponse(totalPaidAmount,updatedLoyaltyPoints);
 
     }
@@ -89,4 +101,14 @@ public class PaymentServiceImpl implements PaymentService{
         loyaltyPointsHistoryRepository.save(history);
     }
 
+    private String paymentSuccessEmail(String guestName,double amountPaid,int remainingPoints){
+        return "Dear " + guestName + ",\n\n" +
+                "Your payment has been received successfully!\n\n" +
+                "Payment Details:\n" +
+                "Amount Paid       : ₹" + amountPaid + "\n" +
+                "Remaining Points  : " + remainingPoints + "\n\n" +
+                "Thank you for choosing Silver Heavens Resort!\n\n" +
+                "Regards,\n" +
+                "Silver Heavens Resort";
+    }
 }

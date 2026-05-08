@@ -9,6 +9,7 @@ import com.example.Reservation.enums.CommissionStatus;
 import com.example.Reservation.enums.LoyaltyTier;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.events.EmailEvent;
 import com.example.Reservation.events.ReservationConfirmedEvent;
 import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
@@ -105,9 +106,9 @@ public class ReservationServiceImpl implements ReservationService{
         ReservationResponse response=ReservationMapper.toResponseDto(reservation);
 
         rabbitTemplate.convertAndSend(
-                RabbitMQConfig.CONFIRMATION_EXCHANGE,
-                RabbitMQConfig.CONFIRMATION_ROUTING_KEY,
-                new ReservationConfirmedEvent(response)
+                RabbitMQConfig.EMAIL_EXCHANGE,
+                RabbitMQConfig.EMAIL_ROUTING_KEY,
+                new EmailEvent(response.getGuestEmail(),"Reservation Confirmed",confirmationEmailBody(reservation))
         );
 
         return response;
@@ -209,4 +210,18 @@ public class ReservationServiceImpl implements ReservationService{
             guest.setLoyaltyTier(LoyaltyTier.BRONZE);
         }
     }
+
+    private String confirmationEmailBody(Reservation reservation){
+        return "Dear " + reservation.getGuest().getGuestName() + ",\n\n" +
+                "Your reservation has been confirmed at Silver Heavens Resort!\n\n" +
+                "Reservation Details:\n" +
+                "Bungalow ID  : " + reservation.getBungalowId() + "\n" +
+                "Arrival Date : " + reservation.getArrivalDate() + "\n" +
+                "Departure Date: " + reservation.getDepartureDate() + "\n" +
+                "Total Amount : ₹" + reservation.getTotalAmount() + "\n\n" +
+                "We look forward to welcoming you!\n\n" +
+                "Regards,\n" +
+                "Silver Heavens Resort";
+    }
+
 }
