@@ -145,9 +145,12 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public RevenueResponseDto getRevenueByBungalow(Long bungalowId) {
-        double totalRevenue=paymentRepository.calculateRevenueByBungalow(bungalowId);
+        Double totalRevenue=paymentRepository.calculateRevenueByBungalow(bungalowId);
 
-        double totalRefunds= cancellationRepository.calculateRefundByBungalow(bungalowId);
+        Double totalRefunds= cancellationRepository.calculateRefundByBungalow(bungalowId);
+
+        totalRevenue = totalRevenue!=null ? totalRevenue : 0.0;
+        totalRefunds = totalRefunds!=null ? totalRefunds : 0.0;
 
         double netRevenue=totalRevenue-totalRefunds;
         return new RevenueResponseDto(bungalowId,totalRevenue,totalRefunds,netRevenue);
