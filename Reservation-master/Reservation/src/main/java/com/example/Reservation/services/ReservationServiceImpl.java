@@ -91,6 +91,14 @@ public class ReservationServiceImpl implements ReservationService{
         if(reservation.getStatus()!=ReservationStatus.PENDING)
             throw new RuntimeException("Only pending reservations can be confirmed");
 
+        boolean isOverlapping=reservationRepository.existsOverlap(reservation.getBungalowId(),ReservationStatus.CONFIRMED,reservation.getArrivalDate(),reservation.getDepartureDate());
+
+        if(isOverlapping){
+            reservation.setStatus(ReservationStatus.WAITING);
+            reservationRepository.save(reservation);
+            throw new RuntimeException("Bungalow already confirmed for these dates.Reservation moved to WAITING.");
+        }
+
         reservation.setStatus(ReservationStatus.CONFIRMED);
 
         Guest guest= reservation.getGuest();
