@@ -11,7 +11,7 @@ public class CancellationMapper {
 
         dto.setReservationId(cancellation.getReservation().getId());
         dto.setGuestName(cancellation.getReservation().getGuest().getGuestName());
-        dto.setBungalowId(cancellation.getReservation().getBungalowId());
+        dto.setBungalowId(cancellation.getReservation().getBungalow().getBungalowId());
         dto.setReason(cancellation.getReason());
         dto.setDaysBeforeCheckIn(cancellation.getDaysBeforeCheckIn());
         dto.setTotalAmount(cancellation.getReservation().getTotalAmount());

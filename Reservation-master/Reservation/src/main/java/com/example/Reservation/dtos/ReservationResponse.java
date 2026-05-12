@@ -13,6 +13,7 @@ import java.time.LocalDate;
 public class ReservationResponse {
     private Long id;
     private Long bungalowId;
+    private String bungalowName;
     private String guestName;
     private String guestEmail;
     private String phone;

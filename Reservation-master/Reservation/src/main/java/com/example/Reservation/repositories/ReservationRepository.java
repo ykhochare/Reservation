@@ -18,7 +18,7 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long>, 
     @Query("""
     SELECT COUNT(r) > 0
     FROM Reservation r
-    WHERE r.bungalowId = :id
+    WHERE r.bungalow.bungalowId = :id
       AND r.status = :status
       AND r.departureDate > :newArrivalDate
       AND r.arrivalDate < :newDepartureDate""")

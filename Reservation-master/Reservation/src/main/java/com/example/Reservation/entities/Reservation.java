@@ -19,9 +19,6 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "bungalow_id", nullable = false)
-    private Long bungalowId;
-
     @Column(name = "arrival_date", nullable = false)
     private LocalDate arrivalDate;
 
@@ -62,6 +59,10 @@ public class Reservation {
     //One-to-One with AgentCommission
     @OneToOne(mappedBy = "reservation")
     private AgentCommission agentCommission;
+
+    @ManyToOne
+    @JoinColumn(name = "bungalow_id")
+    private Bungalow bungalow;
 
     @PrePersist
     public void createdAt(){

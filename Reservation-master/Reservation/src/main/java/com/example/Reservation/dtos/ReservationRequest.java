@@ -11,11 +11,8 @@ public class ReservationRequest {
 
     private Long guestId;
 
-    private Long bungalowId;
-
     private LocalDate arrivalDate;
 
     private LocalDate departureDate;
 
-    private Double totalAmount;
 }

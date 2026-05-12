@@ -23,8 +23,8 @@ public class ReservationSpecification {
                     criteriaBuilder.equal(root.get("departureDate"),departureDate);
     }
 
-    public static Specification<Reservation> hasBungalow(Long id){
+    public static Specification<Reservation> hasBungalow(Long bungalowId){
         return (root,query,criteriaBuilder)->
-                criteriaBuilder.equal(root.get("bungalowId"),id);
+                criteriaBuilder.equal(root.get("bungalow").get("bungalowId"),bungalowId);
     }
 }

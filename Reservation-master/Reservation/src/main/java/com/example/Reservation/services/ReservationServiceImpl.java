@@ -3,13 +3,13 @@ package com.example.Reservation.services;
 import com.example.Reservation.config.RabbitMQConfig;
 import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
-import com.example.Reservation.dtos.RevenueResponseDto;
 import com.example.Reservation.entities.*;
 import com.example.Reservation.enums.CommissionStatus;
 import com.example.Reservation.enums.LoyaltyTier;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
 import com.example.Reservation.events.EmailEvent;
+import com.example.Reservation.exceptions.BungalowNotFoundException;
 import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.exceptions.ReservationNotFoundException;
 import com.example.Reservation.mappers.ReservationMapper;
@@ -30,11 +30,9 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final ReservationRepository reservationRepository;
 
+    private final BungalowRepository bungalowRepository;
+
     private final GuestRepository guestRepository;
-
-    private final PaymentRepository paymentRepository;
-
-    private final CancellationRepository cancellationRepository;
 
     private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
 
@@ -45,17 +43,15 @@ public class ReservationServiceImpl implements ReservationService{
     private final RabbitTemplate rabbitTemplate;
 
     public ReservationServiceImpl(ReservationRepository reservationRepository,
+                                  BungalowRepository bungalowRepository,
                                   GuestRepository guestRepository,
-                                  PaymentRepository paymentRepository,
-                                  CancellationRepository cancellationRepository,
                                   LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository,
                                   AgentCommissionRepository agentCommissionRepository,
                                   TravelAgentRepository travelAgentRepository,
                                   RabbitTemplate rabbitTemplate) {
         this.reservationRepository = reservationRepository;
+        this.bungalowRepository = bungalowRepository;
         this.guestRepository = guestRepository;
-        this.paymentRepository = paymentRepository;
-        this.cancellationRepository = cancellationRepository;
         this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
         this.agentCommissionRepository = agentCommissionRepository;
         this.travelAgentRepository = travelAgentRepository;
@@ -63,21 +59,28 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public ReservationResponse addReservation(ReservationRequest request) {
+    public ReservationResponse addReservation(ReservationRequest request,Long bungalowId) {
 
         Guest guest=guestRepository.findById(request.getGuestId()).orElseThrow(()->new GuestNotFoundException("Guest Not Found..."));
+
+        Bungalow bungalow=bungalowRepository.findById(bungalowId).orElseThrow(()->new BungalowNotFoundException("Bungalow not found..."));
 
         if(!isValidReservation(request.getArrivalDate(),request.getDepartureDate()))
             throw new RuntimeException("Select appropriate dates of booking.");
 
         Reservation reservation= ReservationMapper.toEntity(request);
         reservation.setGuest(guest);
+        reservation.setBungalow(bungalow);
 
-        if(reservationRepository.existsOverlap(request.getBungalowId(),ReservationStatus.CONFIRMED,request.getArrivalDate(),request.getDepartureDate())){
+        if(reservationRepository.existsOverlap(bungalowId,ReservationStatus.CONFIRMED,request.getArrivalDate(),request.getDepartureDate())){
             reservation.setStatus(ReservationStatus.WAITING);
         }else{
             reservation.setStatus(ReservationStatus.PENDING);
         }
+
+        int days=(int)ChronoUnit.DAYS.between(request.getArrivalDate(),request.getDepartureDate());
+        double totalAmount=days * bungalow.getPricePerNight();
+        reservation.setTotalAmount(totalAmount);
 
         Reservation savedReservation=reservationRepository.save(reservation);
 
@@ -91,7 +94,7 @@ public class ReservationServiceImpl implements ReservationService{
         if(reservation.getStatus()!=ReservationStatus.PENDING)
             throw new RuntimeException("Only pending reservations can be confirmed");
 
-        boolean isOverlapping=reservationRepository.existsOverlap(reservation.getBungalowId(),ReservationStatus.CONFIRMED,reservation.getArrivalDate(),reservation.getDepartureDate());
+        boolean isOverlapping=reservationRepository.existsOverlap(reservation.getBungalow().getBungalowId(),ReservationStatus.CONFIRMED,reservation.getArrivalDate(),reservation.getDepartureDate());
 
         if(isOverlapping){
             reservation.setStatus(ReservationStatus.WAITING);
@@ -153,18 +156,6 @@ public class ReservationServiceImpl implements ReservationService{
         return ReservationMapper.toResponseDto(reservation);
     }
 
-    @Override
-    public RevenueResponseDto getRevenueByBungalow(Long bungalowId) {
-        Double totalRevenue=paymentRepository.calculateRevenueByBungalow(bungalowId);
-
-        Double totalRefunds= cancellationRepository.calculateRefundByBungalow(bungalowId);
-
-        totalRevenue = totalRevenue!=null ? totalRevenue : 0.0;
-        totalRefunds = totalRefunds!=null ? totalRefunds : 0.0;
-
-        double netRevenue=totalRevenue-totalRefunds;
-        return new RevenueResponseDto(bungalowId,totalRevenue,totalRefunds,netRevenue);
-    }
 
     @Override
     public int confirmAgentReservations(Long agentId) {
@@ -254,7 +245,7 @@ public class ReservationServiceImpl implements ReservationService{
         return "Dear " + reservation.getGuest().getGuestName() + ",\n\n" +
                 "Your reservation has been confirmed at Silver Heavens Resort!\n\n" +
                 "Reservation Details:\n" +
-                "Bungalow ID  : " + reservation.getBungalowId() + "\n" +
+                "Bungalow ID  : " + reservation.getBungalow().getBungalowId() + "\n" +
                 "Arrival Date : " + reservation.getArrivalDate() + "\n" +
                 "Departure Date: " + reservation.getDepartureDate() + "\n" +
                 "Total Amount : ₹" + reservation.getTotalAmount() + "\n\n" +

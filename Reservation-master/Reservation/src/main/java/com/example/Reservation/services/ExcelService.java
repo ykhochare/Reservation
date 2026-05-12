@@ -1,10 +1,13 @@
 package com.example.Reservation.services;
 
 import com.example.Reservation.dtos.ReservationResponse;
+import com.example.Reservation.entities.Bungalow;
 import com.example.Reservation.entities.Guest;
 import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.entities.TravelAgent;
 import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.exceptions.BungalowNotFoundException;
+import com.example.Reservation.repositories.BungalowRepository;
 import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.ReservationRepository;
 import com.example.Reservation.repositories.TravelAgentRepository;
@@ -30,10 +33,13 @@ public class ExcelService {
 
     private final TravelAgentRepository agentRepository;
 
-    public ExcelService(ReservationRepository reservationRepository, GuestRepository guestRepository, TravelAgentRepository agentRepository) {
+    private final BungalowRepository bungalowRepository;
+
+    public ExcelService(ReservationRepository reservationRepository, GuestRepository guestRepository, TravelAgentRepository agentRepository, BungalowRepository bungalowRepository) {
         this.reservationRepository = reservationRepository;
         this.guestRepository = guestRepository;
         this.agentRepository = agentRepository;
+        this.bungalowRepository = bungalowRepository;
     }
 
     public ByteArrayInputStream generateExcel(List<ReservationResponse> reservations) {
@@ -111,7 +117,8 @@ public class ExcelService {
                 });
 
                 // BungalowId
-                reservation.setBungalowId(getLongValue(row.getCell(3)));
+                Bungalow bungalow=bungalowRepository.findById(getLongValue(row.getCell(3))).orElseThrow(()->new BungalowNotFoundException("Bungalow not found..."));
+                reservation.setBungalow(bungalow);
 
                 // ArrivalDate
                 reservation.setArrivalDate(getLocalDate(row.getCell(4)));

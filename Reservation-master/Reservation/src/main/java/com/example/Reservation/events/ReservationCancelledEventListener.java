@@ -68,7 +68,7 @@ public class ReservationCancelledEventListener {
 
         loyaltyPointsService.saveLoyaltyPointsHistory(guest,cancelledPoints, PointsType.EXPIRED);
 
-        reservationRepository.findTopWaitingReservation(reservation.getBungalowId(),"WAITING")
+        reservationRepository.findTopWaitingReservation(reservation.getBungalow().getBungalowId(),"WAITING")
                 .ifPresent(waiting->{waiting.setStatus(ReservationStatus.CONFIRMED);
                     reservationRepository.save(waiting);
                     Guest waitedGuest= waiting.getGuest();
@@ -85,7 +85,7 @@ public class ReservationCancelledEventListener {
         return "Dear " + reservation.getGuest().getGuestName() + ",\n\n" +
                 "Your reservation has been confirmed at Silver Heavens Resort!\n\n" +
                 "Reservation Details:\n" +
-                "Bungalow ID  : " + reservation.getBungalowId() + "\n" +
+                "Bungalow ID  : " + reservation.getBungalow().getBungalowId() + "\n" +
                 "Arrival Date : " + reservation.getArrivalDate() + "\n" +
                 "Departure Date: " + reservation.getDepartureDate() + "\n" +
                 "Total Amount : ₹" + reservation.getTotalAmount() + "\n\n" +

@@ -26,10 +26,10 @@ public class ReservationController {
     }
 
     @Operation(summary = "Create a new reservation",description = "Creates a reservation for a bungalow.Status will be WAITING if bungalow is already booked for given dates")
-    @PostMapping
-    public ResponseEntity<ReservationResponse> reserve(@RequestBody ReservationRequest request){
+    @PostMapping("/{bungalowId}")
+    public ResponseEntity<ReservationResponse> reserve(@RequestBody ReservationRequest request,@PathVariable Long bungalowId){
 
-        ReservationResponse reservation=reservationService.addReservation(request);
+        ReservationResponse reservation=reservationService.addReservation(request,bungalowId);
 
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);
     }
@@ -59,14 +59,6 @@ public class ReservationController {
 
         List<ReservationResponse> reservationResponses=reservationService.getAllReservations(status, arrivalDate, departureDate, bungalowId);
         return ResponseEntity.ok(reservationResponses);
-    }
-
-    @Operation(summary = "Get revenue by bungalow",description = "Returns total revenue and refunded amount for a specific bungalow")
-    @GetMapping("/bungalow/{bungalowId}/revenue")
-    public ResponseEntity<RevenueResponseDto> getBungalowRevenue(@PathVariable Long bungalowId){
-        RevenueResponseDto revenueResponse=reservationService.getRevenueByBungalow(bungalowId);
-
-        return ResponseEntity.ok(revenueResponse);
     }
 
     @Operation(summary = "Confirms all reservations by agent",description = "Bulk confirms all PENDING reservations linked to a specific travel agent and creates commission for each")
