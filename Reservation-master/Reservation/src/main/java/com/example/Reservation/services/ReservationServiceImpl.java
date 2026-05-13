@@ -4,10 +4,7 @@ import com.example.Reservation.config.RabbitMQConfig;
 import com.example.Reservation.dtos.ReservationRequest;
 import com.example.Reservation.dtos.ReservationResponse;
 import com.example.Reservation.entities.*;
-import com.example.Reservation.enums.CommissionStatus;
-import com.example.Reservation.enums.LoyaltyTier;
-import com.example.Reservation.enums.PointsType;
-import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.enums.*;
 import com.example.Reservation.events.EmailEvent;
 import com.example.Reservation.exceptions.BungalowNotFoundException;
 import com.example.Reservation.exceptions.GuestNotFoundException;
@@ -23,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +38,10 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final TravelAgentRepository travelAgentRepository;
 
+    private final BungalowAvailabilityRepository bungalowAvailabilityRepository;
+
+    private final LoyaltyPointsService loyaltyPointsService;
+
     private final RabbitTemplate rabbitTemplate;
 
     public ReservationServiceImpl(ReservationRepository reservationRepository,
@@ -48,6 +50,7 @@ public class ReservationServiceImpl implements ReservationService{
                                   LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository,
                                   AgentCommissionRepository agentCommissionRepository,
                                   TravelAgentRepository travelAgentRepository,
+                                  BungalowAvailabilityRepository bungalowAvailabilityRepository, LoyaltyPointsService loyaltyPointsService,
                                   RabbitTemplate rabbitTemplate) {
         this.reservationRepository = reservationRepository;
         this.bungalowRepository = bungalowRepository;
@@ -55,6 +58,8 @@ public class ReservationServiceImpl implements ReservationService{
         this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
         this.agentCommissionRepository = agentCommissionRepository;
         this.travelAgentRepository = travelAgentRepository;
+        this.bungalowAvailabilityRepository = bungalowAvailabilityRepository;
+        this.loyaltyPointsService = loyaltyPointsService;
         this.rabbitTemplate = rabbitTemplate;
     }
 
@@ -105,15 +110,17 @@ public class ReservationServiceImpl implements ReservationService{
         reservation.setStatus(ReservationStatus.CONFIRMED);
 
         Guest guest= reservation.getGuest();
-        int newPoints=calculateLoyaltyPoints(reservation);
+        int newPoints=loyaltyPointsService.calculateConfirmationLoyaltyPoints(reservation);
 
-        saveLoyaltyPointsHistory(guest,newPoints);
+        loyaltyPointsService.saveLoyaltyPointsHistory(guest,newPoints,PointsType.EARNED);
         guest.setLoyaltyPoints(guest.getLoyaltyPoints()+newPoints);
         guest.setTotalPointsEarned(guest.getTotalPointsEarned()+newPoints);
-        updateLoyaltyTier(guest);
+        loyaltyPointsService.updateLoyaltyTier(guest);
         guestRepository.save(guest);
 
         reservationRepository.save(reservation);
+
+        split(reservation.getBungalow(),reservation.getArrivalDate(),reservation.getDepartureDate());
 
         ReservationResponse response=ReservationMapper.toResponseDto(reservation);
 
@@ -213,32 +220,41 @@ public class ReservationServiceImpl implements ReservationService{
         return arrival.isBefore(departure) || !arrival.isBefore(LocalDate.now());
     }
 
-    private int calculateLoyaltyPoints(Reservation reservation){
+    public void split(Bungalow bungalow,LocalDate arrivalDate,LocalDate departureDate){
+        BungalowAvailability availability=bungalowAvailabilityRepository.findCoveringAvailableRecord(bungalow.getBungalowId(), arrivalDate, departureDate)
+                                                                                         .orElseThrow(()->new RuntimeException("Bungalow is not available..."));
 
-        int days= (int)ChronoUnit.DAYS.between(reservation.getArrivalDate(),reservation.getDepartureDate());
+        List<BungalowAvailability> toSave=new ArrayList<>();
 
-        return days*10;
-
-    }
-
-    private void saveLoyaltyPointsHistory(Guest guest, Integer points){
-
-        LoyaltyPointsHistory history=new LoyaltyPointsHistory();
-        history.setGuest(guest);
-        history.setPoints(points);
-        history.setPointsType(PointsType.EARNED);
-        loyaltyPointsHistoryRepository.save(history);
-    }
-
-    private void updateLoyaltyTier(Guest guest) {
-        int totalEarned = guest.getTotalPointsEarned();
-        if (totalEarned >= 1000) {
-            guest.setLoyaltyTier(LoyaltyTier.GOLD);
-        } else if (totalEarned >= 500) {
-            guest.setLoyaltyTier(LoyaltyTier.SILVER);
-        } else {
-            guest.setLoyaltyTier(LoyaltyTier.BRONZE);
+        if(arrivalDate.isAfter(availability.getFromDate())){
+            BungalowAvailability leftAvailable=new BungalowAvailability();
+            leftAvailable.setBungalow(bungalow);
+            leftAvailable.setStatus(AvailabilityStatus.AVAILABLE);
+            leftAvailable.setFromDate(availability.getFromDate());
+            leftAvailable.setToDate(arrivalDate.minusDays(1));
+            toSave.add(leftAvailable);
         }
+
+        BungalowAvailability bungalowAvailability=new BungalowAvailability();
+        bungalowAvailability.setBungalow(bungalow);
+        bungalowAvailability.setStatus(AvailabilityStatus.BOOKED);
+        bungalowAvailability.setFromDate(arrivalDate);
+        bungalowAvailability.setToDate(departureDate);
+        toSave.add(bungalowAvailability);
+
+        if(departureDate.isBefore(availability.getToDate())){
+            BungalowAvailability rightAvailable=new BungalowAvailability();
+            rightAvailable.setBungalow(bungalow);
+            rightAvailable.setStatus(AvailabilityStatus.AVAILABLE);
+            rightAvailable.setFromDate(departureDate.plusDays(1));
+            rightAvailable.setToDate(availability.getToDate());
+            toSave.add(rightAvailable);
+        }
+
+        bungalowAvailabilityRepository.saveAll(toSave);
+
+        bungalowAvailabilityRepository.delete(availability);
+
     }
 
     private String confirmationEmailBody(Reservation reservation){

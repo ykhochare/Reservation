@@ -30,14 +30,18 @@ public class CancellationServiceImpl implements CancellationService{
 
     private final ApplicationEventPublisher eventPublisher;
 
+    private final BungalowAvailabilityRepository bungalowAvailabilityRepository;
+
     public CancellationServiceImpl(CancellationPolicyRepository cancellationPolicyRepository,
                                    CancellationRepository cancellationRepository,
                                    ReservationRepository reservationRepository,
-                                   ApplicationEventPublisher eventPublisher) {
+                                   ApplicationEventPublisher eventPublisher,
+                                   BungalowAvailabilityRepository bungalowAvailabilityRepository) {
         this.cancellationPolicyRepository = cancellationPolicyRepository;
         this.cancellationRepository = cancellationRepository;
         this.reservationRepository = reservationRepository;
         this.eventPublisher = eventPublisher;
+        this.bungalowAvailabilityRepository = bungalowAvailabilityRepository;
     }
 
     @Override
@@ -67,6 +71,8 @@ public class CancellationServiceImpl implements CancellationService{
         reservation.setStatus(ReservationStatus.CANCELLED);
         reservationRepository.save(reservation);
         cancellationRepository.save(cancellation);
+
+        merge(reservation.getBungalow().getBungalowId(),reservation.getArrivalDate(),reservation.getDepartureDate());
 
         eventPublisher.publishEvent(new ReservationCancelledEvent(reservation,refundAmount));
 
@@ -103,6 +109,25 @@ public class CancellationServiceImpl implements CancellationService{
         Cancellation cancellation=cancellationRepository.findByReservation_Id(id).orElseThrow(()->new CancellationNotFoundException("Cancellation not found."));
 
         return CancellationMapper.toResponseDto(cancellation);
+    }
+
+    public void merge(Long bungalowId,LocalDate arrivalDate,LocalDate departureDate){
+        BungalowAvailability availability=bungalowAvailabilityRepository.findBookedRecord(bungalowId,arrivalDate,departureDate)
+                                                                                                .orElseThrow(()->new RuntimeException("Bungalow availability not found..."));
+
+        availability.setStatus(AvailabilityStatus.AVAILABLE);
+
+
+        bungalowAvailabilityRepository.findByBungalow_BungalowIdAndStatusAndToDate(bungalowId,AvailabilityStatus.AVAILABLE,arrivalDate.minusDays(1))
+                                                                    .ifPresent(left ->{availability.setFromDate(left.getFromDate());
+                                                                                                        bungalowAvailabilityRepository.delete(left);} );
+
+        bungalowAvailabilityRepository.findByBungalow_BungalowIdAndStatusAndFromDate(bungalowId,AvailabilityStatus.AVAILABLE,departureDate.plusDays(1))
+                                                                    .ifPresent(right -> {availability.setToDate(right.getToDate());
+                                                                                                          bungalowAvailabilityRepository.delete(right);});
+
+        bungalowAvailabilityRepository.save(availability);
+
     }
 
 }

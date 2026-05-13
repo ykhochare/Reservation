@@ -6,11 +6,13 @@ import com.example.Reservation.entities.Reservation;
 import com.example.Reservation.enums.CommissionStatus;
 import com.example.Reservation.enums.PointsType;
 import com.example.Reservation.enums.ReservationStatus;
+import com.example.Reservation.exceptions.GuestNotFoundException;
 import com.example.Reservation.repositories.AgentCommissionRepository;
 import com.example.Reservation.repositories.GuestRepository;
 import com.example.Reservation.repositories.ReservationRepository;
 import com.example.Reservation.services.EmailService;
 import com.example.Reservation.services.LoyaltyPointsService;
+import com.example.Reservation.services.ReservationServiceImpl;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -28,16 +30,20 @@ public class ReservationCancelledEventListener {
 
     private final LoyaltyPointsService loyaltyPointsService;
 
+    private final ReservationServiceImpl reservationService;
+
     public ReservationCancelledEventListener(AgentCommissionRepository agentCommissionRepository,
                                              GuestRepository guestRepository,
                                              ReservationRepository reservationRepository,
                                              EmailService emailService,
-                                             LoyaltyPointsService loyaltyPointsService) {
+                                             LoyaltyPointsService loyaltyPointsService,
+                                             ReservationServiceImpl reservationService) {
         this.agentCommissionRepository = agentCommissionRepository;
         this.guestRepository = guestRepository;
         this.reservationRepository = reservationRepository;
         this.emailService = emailService;
         this.loyaltyPointsService = loyaltyPointsService;
+        this.reservationService = reservationService;
     }
 
     @Async
@@ -55,7 +61,7 @@ public class ReservationCancelledEventListener {
             agentCommissionRepository.save(agentCommission);
         }
 
-        Guest guest=reservation.getGuest();
+        Guest guest=guestRepository.findById(reservation.getGuest().getGuestId()).orElseThrow(()->new GuestNotFoundException("Guest not found..."));
         int cancelledPoints=loyaltyPointsService.calculateCancellationLoyaltyPoints(reservation);
         int newLoyaltyPoints= Math.max(guest.getLoyaltyPoints()-cancelledPoints,0);
         guest.setLoyaltyPoints(newLoyaltyPoints);
@@ -71,8 +77,9 @@ public class ReservationCancelledEventListener {
         reservationRepository.findTopWaitingReservation(reservation.getBungalow().getBungalowId(),"WAITING")
                 .ifPresent(waiting->{waiting.setStatus(ReservationStatus.CONFIRMED);
                     reservationRepository.save(waiting);
-                    Guest waitedGuest= waiting.getGuest();
-                    emailService.sendMail(guest.getGuestEmail(),"Reservation Confirmed",confirmationEmailBody(waiting));
+                    reservationService.split(waiting.getBungalow(),waiting.getArrivalDate(),waiting.getDepartureDate());
+                    Guest waitedGuest= guestRepository.findById(waiting.getGuest().getGuestId()).orElseThrow(()->new GuestNotFoundException("Guest not found..."));
+                    emailService.sendMail(waitedGuest.getGuestEmail(),"Reservation Confirmed",confirmationEmailBody(waiting));
                     int updatedPoints=loyaltyPointsService.calculateConfirmationLoyaltyPoints(waiting);
                     waitedGuest.setLoyaltyPoints(waitedGuest.getLoyaltyPoints()+updatedPoints);
                     waitedGuest.setTotalPointsEarned(waitedGuest.getTotalPointsEarned()+updatedPoints);
