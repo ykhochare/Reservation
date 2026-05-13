@@ -26,6 +26,9 @@ public class Bungalow {
     @OneToMany(mappedBy = "bungalow")
     private List<Reservation> reservations;
 
+    @OneToMany(mappedBy = "bungalow")
+    private List<BungalowAvailability> availabilities;
+
     @PrePersist
     public void createdAt(){this.createdAt=LocalDateTime.now();}
 }
