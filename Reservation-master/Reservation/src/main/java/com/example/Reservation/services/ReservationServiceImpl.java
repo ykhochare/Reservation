@@ -47,7 +47,8 @@ public class ReservationServiceImpl implements ReservationService{
                                   GuestRepository guestRepository,
                                   AgentCommissionRepository agentCommissionRepository,
                                   TravelAgentRepository travelAgentRepository,
-                                  BungalowAvailabilityRepository bungalowAvailabilityRepository, LoyaltyPointsService loyaltyPointsService,
+                                  BungalowAvailabilityRepository bungalowAvailabilityRepository,
+                                  LoyaltyPointsService loyaltyPointsService,
                                   RabbitTemplate rabbitTemplate) {
         this.reservationRepository = reservationRepository;
         this.bungalowRepository = bungalowRepository;
