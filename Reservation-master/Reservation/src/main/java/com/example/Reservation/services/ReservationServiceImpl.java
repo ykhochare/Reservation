@@ -32,8 +32,6 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final GuestRepository guestRepository;
 
-    private final LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository;
-
     private final AgentCommissionRepository agentCommissionRepository;
 
     private final TravelAgentRepository travelAgentRepository;
@@ -47,7 +45,6 @@ public class ReservationServiceImpl implements ReservationService{
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   BungalowRepository bungalowRepository,
                                   GuestRepository guestRepository,
-                                  LoyaltyPointsHistoryRepository loyaltyPointsHistoryRepository,
                                   AgentCommissionRepository agentCommissionRepository,
                                   TravelAgentRepository travelAgentRepository,
                                   BungalowAvailabilityRepository bungalowAvailabilityRepository, LoyaltyPointsService loyaltyPointsService,
@@ -55,7 +52,6 @@ public class ReservationServiceImpl implements ReservationService{
         this.reservationRepository = reservationRepository;
         this.bungalowRepository = bungalowRepository;
         this.guestRepository = guestRepository;
-        this.loyaltyPointsHistoryRepository = loyaltyPointsHistoryRepository;
         this.agentCommissionRepository = agentCommissionRepository;
         this.travelAgentRepository = travelAgentRepository;
         this.bungalowAvailabilityRepository = bungalowAvailabilityRepository;
