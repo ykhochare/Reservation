@@ -17,6 +17,9 @@ public interface CancellationRepository extends JpaRepository<Cancellation,Long>
 
     Optional<Cancellation> findByReservation_Id(Long reservationId);
 
-    @Query(value = "select sum(refund_amount) from reservations r join cancellations c on c.reservation_id=r.id where bungalow_id= :bungalowId",nativeQuery = true)
+    @Query("""
+    SELECT COALESCE(SUM(c.refundAmount), 0.0) FROM Cancellation c
+    WHERE c.reservation.bungalow.bungalowId = :bungalowId
+    """)
     Double calculateRefundByBungalow(@Param("bungalowId") Long bungalowId);
 }

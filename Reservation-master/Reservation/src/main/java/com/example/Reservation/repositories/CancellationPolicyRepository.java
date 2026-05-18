@@ -7,7 +7,12 @@ import org.springframework.data.repository.query.Param;
 
 public interface CancellationPolicyRepository extends JpaRepository<CancellationPolicy,Long> {
 
-    @Query(value = "select * from cancellation_policies where :days between days_before_checkin_from and days_before_checkin_to", nativeQuery = true)
+
+    @Query("""
+    SELECT c FROM CancellationPolicy c
+    WHERE c.daysBeforeCheckInFrom <= :days
+    AND c.daysBeforeCheckInTo >= :days
+""")
     CancellationPolicy findByDaysBeforeCheckIn(@Param("days") Integer days);
 
     @Query("SELECT COUNT(c) > 0 FROM CancellationPolicy c WHERE :from <= c.daysBeforeCheckInTo AND :to >= c.daysBeforeCheckInFrom")

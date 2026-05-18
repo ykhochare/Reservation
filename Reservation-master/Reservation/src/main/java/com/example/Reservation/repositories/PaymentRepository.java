@@ -11,6 +11,9 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 
     List<Payment> getByReservation_Id(Long reservationId);
 
-    @Query(value = "select sum(amount) from reservations r join payment p on r.id=p.reservation_id where bungalow_id= :bungalowId",nativeQuery = true)
+    @Query("""
+    SELECT COALESCE(SUM(p.amount), 0.0) FROM Payment p
+    WHERE p.reservation.bungalow.bungalowId = :bungalowId
+    """)
     Double calculateRevenueByBungalow(@Param("bungalowId") Long bungalowId);
 }

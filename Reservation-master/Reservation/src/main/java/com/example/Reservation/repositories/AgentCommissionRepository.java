@@ -11,7 +11,12 @@ public interface AgentCommissionRepository extends JpaRepository<AgentCommission
 
     List<AgentCommission> findByTravelAgentAgentId(Long agentId);
 
-    @Query(value = "select * from agent_commission where agent_id = :agentId and year(created_at) = :year and month(created_at) = :month",nativeQuery = true)
+    @Query("""
+    SELECT a FROM AgentCommission a
+    WHERE a.travelAgent.agentId = :agentId
+    AND YEAR(a.createdAt) = :year
+    AND MONTH(a.createdAt) = :month
+    """)
     List<AgentCommission> findByAgentAndMonth(
             @Param("agentId") Long agentId,
             @Param("year") int year,

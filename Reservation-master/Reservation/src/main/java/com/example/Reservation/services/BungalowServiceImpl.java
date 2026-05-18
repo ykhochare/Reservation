@@ -71,9 +71,6 @@ public class BungalowServiceImpl implements BungalowService{
 
         Double totalRefunds= cancellationRepository.calculateRefundByBungalow(bungalowId);
 
-        totalRevenue = totalRevenue!=null ? totalRevenue : 0.0;
-        totalRefunds = totalRefunds!=null ? totalRefunds : 0.0;
-
         double netRevenue=totalRevenue-totalRefunds;
         return new RevenueResponseDto(bungalowId,totalRevenue,totalRefunds,netRevenue);
     }

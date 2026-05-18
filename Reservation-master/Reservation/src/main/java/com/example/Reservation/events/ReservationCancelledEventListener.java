@@ -14,6 +14,7 @@ import com.example.Reservation.services.EmailService;
 import com.example.Reservation.services.LoyaltyPointsService;
 import com.example.Reservation.services.ReservationServiceImpl;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -74,7 +75,8 @@ public class ReservationCancelledEventListener {
 
         loyaltyPointsService.saveLoyaltyPointsHistory(guest,cancelledPoints, PointsType.EXPIRED);
 
-        reservationRepository.findTopWaitingReservation(reservation.getBungalow().getBungalowId(),"WAITING")
+        reservationRepository.findTopWaitingReservation(reservation.getBungalow().getBungalowId(),ReservationStatus.WAITING, PageRequest.of(0,1))
+                .stream().findFirst()
                 .ifPresent(waiting->{waiting.setStatus(ReservationStatus.CONFIRMED);
                     reservationRepository.save(waiting);
                     reservationService.split(waiting.getBungalow(),waiting.getArrivalDate(),waiting.getDepartureDate());
